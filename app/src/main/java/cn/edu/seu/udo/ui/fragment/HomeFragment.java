@@ -24,7 +24,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.edu.seu.udo.R;
+import cn.edu.seu.udo.bean.WeatherBean;
 import cn.edu.seu.udo.model.Tool;
+import cn.edu.seu.udo.mvp.presenter.WeatherPresenter;
+import cn.edu.seu.udo.mvp.view.WeatherIView;
 import cn.edu.seu.udo.ui.view.BannerPreviewHolder;
 import cn.edu.seu.udo.utils.ToastUtil;
 
@@ -36,10 +39,16 @@ import cn.edu.seu.udo.utils.ToastUtil;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends BaseFragment implements AdapterView.OnItemClickListener, OnItemClickListener {
+public class HomeFragment extends BaseFragment implements AdapterView.OnItemClickListener, OnItemClickListener,
+        WeatherIView<WeatherBean> {
 
-    @BindView(R.id.banner) ConvenientBanner banner;
-    @BindView(R.id.tool_list) ListView toolsView;
+    @BindView(R.id.banner)
+    ConvenientBanner banner;
+    @BindView(R.id.tool_list)
+    ListView toolsView;
+
+
+    private WeatherPresenter weatherPresenter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -84,6 +93,8 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
+        weatherPresenter = new WeatherPresenter();
+        weatherPresenter.takeView(this);
         setupListView();
         setupBanner();
         return view;
@@ -105,16 +116,18 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
     /**
      * banner callback
+     *
      * @param position item clicked
      */
     @Override
     public void onItemClick(int position) {
         Log.i("Home", "Banner clicked on " + position);
+        weatherPresenter.getWeather("南京");
         ToastUtil.show(getActivity(), "Banner");
     }
 
     private void setupBanner() {
-        List<Integer> images =  new ArrayList<>();
+        List<Integer> images = new ArrayList<>();
         images.add(R.drawable.sukura);
         banner.setPages(
                 new CBViewHolderCreator<BannerPreviewHolder>() {
@@ -144,12 +157,29 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     private List<Tool> tools() {
         final List<Tool> tools = new ArrayList<>();
 
-        tools.add(new Tool(R.drawable.study, "study", new ArrayList<String>(){{add("study now");add("stop study");}}));
-        tools.add(new Tool(R.drawable.exercise, "exercise", new ArrayList<String>(){{add("exercise now");add("stop exercise");}}));
-        tools.add(new Tool(R.drawable.rise, "rise", new ArrayList<String>(){{add("rise now");add("stop rise");}}));
-        tools.add(new Tool(R.drawable.rank, "rank", new ArrayList<String>(){{add("rank now");add("stop rank");}}));
+        tools.add(new Tool(R.drawable.study, "study", new ArrayList<String>() {{
+            add("study now");
+            add("stop study");
+        }}));
+        tools.add(new Tool(R.drawable.exercise, "exercise", new ArrayList<String>() {{
+            add("exercise now");
+            add("stop exercise");
+        }}));
+        tools.add(new Tool(R.drawable.rise, "rise", new ArrayList<String>() {{
+            add("rise now");
+            add("stop rise");
+        }}));
+        tools.add(new Tool(R.drawable.rank, "rank", new ArrayList<String>() {{
+            add("rank now");
+            add("stop rank");
+        }}));
 
         return tools;
+    }
+
+    @Override
+    public void show(WeatherBean weatherBean) {
+        ToastUtil.show(this.getActivity(), weatherBean.getData() + "," + weatherBean.getWendu() + "," + weatherBean.getType());
     }
 
     class ToolAdapter extends BaseFlipAdapter<Tool> {

@@ -20,7 +20,6 @@ public class StudyDetailPresenter implements Presenter<StudyDetailIView> {
 
     private List<StudyTime> studyTimes;
 
-    @Inject
     public StudyDetailPresenter() {
     }
 

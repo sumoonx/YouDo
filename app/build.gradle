@@ -59,4 +59,12 @@ dependencies {
     compile 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2' // (v4.5)
 
     compile 'com.yalantis:flipviewpager:1.0.0'
+
+
+    /*Retrofit_rxjava*/
+    compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
+    compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
+    compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta2'
+    compile 'io.reactivex:rxjava:1.0.16'
+    compile 'io.reactivex:rxandroid:1.0.1'
 }

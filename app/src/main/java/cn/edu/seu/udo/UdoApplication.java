@@ -1,4 +1,4 @@
-package cn.edu.seu.udo.udo;
+package cn.edu.seu.udo;
 
 import android.app.Application;
 
@@ -10,11 +10,19 @@ import com.joanzapata.iconify.fonts.FontAwesomeModule;
  * E-mail: jeremy_xm@163.com
  */
 public class UdoApplication extends Application {
+
+    private static UdoApplication udoApplication;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        udoApplication = this;
 
         initializeIconify();
+    }
+
+    public static UdoApplication getUdoApplication() {
+        return udoApplication;
     }
 
     private void initializeIconify() {
