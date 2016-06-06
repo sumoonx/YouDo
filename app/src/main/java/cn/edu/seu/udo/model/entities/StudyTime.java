@@ -1,4 +1,4 @@
-package cn.edu.seu.udo.model;
+package cn.edu.seu.udo.model.entities;
 
 import java.util.ArrayList;
 import java.util.Collections;

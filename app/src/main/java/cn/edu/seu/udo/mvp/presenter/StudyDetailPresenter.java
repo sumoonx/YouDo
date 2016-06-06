@@ -3,12 +3,9 @@ package cn.edu.seu.udo.mvp.presenter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
-import cn.edu.seu.udo.model.AppUsage;
-import cn.edu.seu.udo.model.StudyTime;
+import cn.edu.seu.udo.model.entities.AppUsage;
+import cn.edu.seu.udo.model.entities.StudyTime;
 import cn.edu.seu.udo.mvp.view.StudyDetailIView;
-import cn.edu.seu.udo.utils.LogUtil;
 
 /**
  * Author: Jeremy Xu on 2016/4/10 13:53
@@ -41,7 +38,6 @@ public class StudyDetailPresenter implements Presenter<StudyDetailIView> {
 
     public void getStudyTimes() {
         studyTimes = generateStudyTimes();
-        LogUtil.ai(studyTimes.toString());
         studyDetailView.renderStudyTimes(studyTimes);
         studyDetailView.renderRank(studyTimes.get(studyTimes.size() - 1).getRank());
         studyDetailView.renderAppUsages(studyTimes.get(studyTimes.size() - 1).getAppUsageBrief());

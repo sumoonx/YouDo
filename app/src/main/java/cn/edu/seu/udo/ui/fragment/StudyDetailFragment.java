@@ -1,6 +1,5 @@
 package cn.edu.seu.udo.ui.fragment;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,8 +28,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.edu.seu.udo.R;
-import cn.edu.seu.udo.model.AppUsage;
-import cn.edu.seu.udo.model.StudyTime;
+import cn.edu.seu.udo.model.entities.AppUsage;
+import cn.edu.seu.udo.model.entities.StudyTime;
 import cn.edu.seu.udo.mvp.presenter.StudyDetailPresenter;
 import cn.edu.seu.udo.mvp.view.StudyDetailIView;
 import cn.edu.seu.udo.ui.HourFormatter;

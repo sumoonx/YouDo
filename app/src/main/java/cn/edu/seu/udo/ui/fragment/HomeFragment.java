@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
@@ -25,7 +24,7 @@ import java.util.List;
 import butterknife.BindView;
 import cn.edu.seu.udo.R;
 import cn.edu.seu.udo.bean.WeatherBean;
-import cn.edu.seu.udo.model.Tool;
+import cn.edu.seu.udo.model.entities.Tool;
 import cn.edu.seu.udo.mvp.presenter.WeatherPresenter;
 import cn.edu.seu.udo.mvp.view.WeatherIView;
 import cn.edu.seu.udo.ui.view.BannerPreviewHolder;
