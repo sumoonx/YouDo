@@ -20,7 +20,7 @@ import cn.edu.seu.udo.R;
  */
 public abstract class BaseFragment extends Fragment {
 
-    private OnFragmentInteractionListener mListener;
+    protected OnFragmentInteractionListener fragmentInteractionListener;
     private Unbinder mBinder;
 
     @Override
@@ -29,7 +29,7 @@ public abstract class BaseFragment extends Fragment {
         if (!(getActivity() instanceof OnFragmentInteractionListener)) {
             throw new ClassCastException("Hosting Activity must implement OnFragmentInteractionListener");
         } else {
-            mListener = (OnFragmentInteractionListener) getActivity();
+            fragmentInteractionListener = (OnFragmentInteractionListener) getActivity();
         }
     }
 
@@ -47,8 +47,8 @@ public abstract class BaseFragment extends Fragment {
         super.onAttach(context);
         Activity activity = getActivity();
         if (activity instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) activity;
-            mListener.setTopFragment(this);
+            fragmentInteractionListener = (OnFragmentInteractionListener) activity;
+            fragmentInteractionListener.setTopFragment(this);
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -57,7 +57,7 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onDetach() {
-        mListener = null;
+        fragmentInteractionListener = null;
         super.onDetach();
     }
 
@@ -67,9 +67,9 @@ public abstract class BaseFragment extends Fragment {
         super.onDestroyView();
     }
 
-    public void interaction(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+    public void interaction(String uri) {
+        if (fragmentInteractionListener != null) {
+            fragmentInteractionListener.onFragmentInteraction(uri);
         }
     }
 
@@ -93,6 +93,6 @@ public abstract class BaseFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void setTopFragment(BaseFragment fragment);
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(String uri);
     }
 }

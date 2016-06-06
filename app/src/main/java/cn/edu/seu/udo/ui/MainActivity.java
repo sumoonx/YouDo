@@ -13,6 +13,8 @@ import cn.edu.seu.udo.R;
 import cn.edu.seu.udo.ui.fragment.BaseFragment;
 import cn.edu.seu.udo.ui.fragment.DrawerFragment;
 import cn.edu.seu.udo.ui.fragment.HomeFragment;
+import cn.edu.seu.udo.ui.fragment.StudyDetailFragment;
+import cn.edu.seu.udo.ui.fragment.StudyFragment;
 
 public class MainActivity extends AppCompatActivity implements BaseFragment.OnFragmentInteractionListener {
 
@@ -47,8 +49,15 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnFr
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-        String intent = uri.toString();
+    public void onFragmentInteraction(String uri) {
+        switch (uri) {
+            case StudyFragment.START:
+                addFragment(new StudyFragment());
+                break;
+            case StudyDetailFragment.START:
+                addFragment(new StudyDetailFragment());
+                break;
+        }
     }
 
     private void setupDrawer() {

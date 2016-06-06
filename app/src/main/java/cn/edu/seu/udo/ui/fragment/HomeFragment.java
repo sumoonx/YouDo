@@ -96,7 +96,11 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.i("Home", "ListView item clicked");
         Tool tool = (Tool) toolsView.getAdapter().getItem(position);
-        ToastUtil.show(getActivity(), tool.getName());
+        if (tool.getName().equals("study")) {
+            fragmentInteractionListener.onFragmentInteraction(StudyFragment.START);
+        } else {
+            ToastUtil.show(getActivity(), tool.getName());
+        }
     }
 
     /**
