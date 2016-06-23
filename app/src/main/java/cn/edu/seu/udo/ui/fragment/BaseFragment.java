@@ -78,6 +78,8 @@ public abstract class BaseFragment extends Fragment {
         return false;
     }
 
+    public abstract String getName();
+
     @LayoutRes
     protected abstract int getLayout();
 

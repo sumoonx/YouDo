@@ -41,6 +41,8 @@ import cn.edu.seu.udo.ui.StudyDetailMarkerView;
  */
 public class StudyDetailFragment extends BaseFragment implements StudyDetailIView {
 
+    public static final String TAG = "study_detail";
+
     public static final String START = "start_study_detail";
 
     private static final int LINE_CHART_ANITIME = 1500;
@@ -73,6 +75,11 @@ public class StudyDetailFragment extends BaseFragment implements StudyDetailIVie
     public void onDetach() {
         super.onDetach();
         presenter.dropView();
+    }
+
+    @Override
+    public String getName() {
+        return TAG;
     }
 
     @Override

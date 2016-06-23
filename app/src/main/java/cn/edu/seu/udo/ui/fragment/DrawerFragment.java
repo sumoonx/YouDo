@@ -1,9 +1,5 @@
 package cn.edu.seu.udo.ui.fragment;
 
-import android.content.Context;
-import android.widget.ImageView;
-
-import butterknife.BindView;
 import butterknife.OnClick;
 import cn.edu.seu.udo.R;
 import cn.edu.seu.udo.utils.ToastUtil;
@@ -14,19 +10,21 @@ import cn.edu.seu.udo.utils.ToastUtil;
  */
 public class DrawerFragment extends BaseFragment {
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
+    public static final String TAG = "drawer";
 
     @Override
     protected int getLayout() {
         return R.layout.fragment_drawer;
     }
 
+    @Override
+    public String getName() {
+        return TAG;
+    }
+
     @OnClick(R.id.profile_image)
     protected void startProfile() {
-        ToastUtil.show(getActivity(), "Profile");
+        fragmentInteractionListener.onFragmentInteraction(HomeFragment.START);
     }
 
     @OnClick(R.id.my_zoe)

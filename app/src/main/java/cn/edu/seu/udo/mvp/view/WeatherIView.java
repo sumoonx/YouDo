@@ -1,7 +1,5 @@
 package cn.edu.seu.udo.mvp.view;
 
-import cn.edu.seu.udo.bean.WeatherBean;
-
 /*
  *desc 
  *author rhg

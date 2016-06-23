@@ -1,4 +1,4 @@
-package cn.edu.seu.udo.mvp.api;
+package cn.edu.seu.udo.model.repository;
 
 /*
  *desc 存放公共URL

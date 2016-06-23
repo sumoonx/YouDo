@@ -1,7 +1,7 @@
-package cn.edu.seu.udo.mvp.api;
+package cn.edu.seu.udo.model.repository;
 
 
-import cn.edu.seu.udo.bean.WeatherUrlBean;
+import cn.edu.seu.udo.model.entities.WeatherUrlBean;
 import retrofit.http.GET;
 import retrofit.http.Query;
 import rx.Observable;

@@ -1,4 +1,4 @@
-package cn.edu.seu.udo.bean;
+package cn.edu.seu.udo.model.entities;
 
 import java.util.List;
 

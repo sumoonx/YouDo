@@ -14,6 +14,8 @@ import cn.edu.seu.udo.utils.LogUtil;
  */
 public class StudyFragment extends BaseFragment implements StudyIView{
 
+    public static final String TAG = "study";
+
     public static final String START = "start_study";
 
     @Inject StudyPresenter presenter;
@@ -29,6 +31,11 @@ public class StudyFragment extends BaseFragment implements StudyIView{
     public void onStop() {
         presenter.dropView();
         super.onStop();
+    }
+
+    @Override
+    public String getName() {
+        return TAG;
     }
 
     @Override

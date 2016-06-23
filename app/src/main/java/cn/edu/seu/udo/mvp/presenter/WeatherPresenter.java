@@ -1,9 +1,7 @@
 package cn.edu.seu.udo.mvp.presenter;
 
-import android.util.Log;
-
-import cn.edu.seu.udo.bean.WeatherBean;
-import cn.edu.seu.udo.mvp.model.WeatherMode;
+import cn.edu.seu.udo.model.entities.WeatherBean;
+import cn.edu.seu.udo.model.entities.WeatherModel;
 import cn.edu.seu.udo.mvp.view.WeatherIView;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -17,10 +15,10 @@ import rx.schedulers.Schedulers;
  */
 public class WeatherPresenter implements Presenter<WeatherIView> {
     WeatherIView weatherIView;
-    WeatherMode weatherModel;
+    WeatherModel weatherModel;
 
     public WeatherPresenter() {
-        weatherModel = new WeatherMode();
+        weatherModel = new WeatherModel();
     }
 
     public void getWeather(String city) {
@@ -46,6 +44,6 @@ public class WeatherPresenter implements Presenter<WeatherIView> {
 
     @Override
     public void dropView() {
-
+        weatherIView = null;
     }
 }

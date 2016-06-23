@@ -5,14 +5,18 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.util.TimeUtils;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import cn.edu.seu.udo.R;
 import cn.edu.seu.udo.ui.fragment.BaseFragment;
 import cn.edu.seu.udo.ui.fragment.DrawerFragment;
 import cn.edu.seu.udo.ui.fragment.HomeFragment;
+import cn.edu.seu.udo.ui.fragment.RiseFragment;
 import cn.edu.seu.udo.ui.fragment.StudyDetailFragment;
 import cn.edu.seu.udo.ui.fragment.StudyFragment;
 
@@ -50,14 +54,26 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnFr
 
     @Override
     public void onFragmentInteraction(String uri) {
+        if (uri == null)    return;
         switch (uri) {
+            case HomeFragment.START:
+                backHome();
+                break;
             case StudyFragment.START:
                 addFragment(new StudyFragment());
                 break;
             case StudyDetailFragment.START:
                 addFragment(new StudyDetailFragment());
                 break;
+            case RiseFragment.START:
+                addFragment(new RiseFragment());
+                break;
         }
+    }
+
+    //TODO:
+    private void backHome() {
+
     }
 
     private void setupDrawer() {
@@ -77,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnFr
         transaction.commit();
     }
 
-    private void addFragment(Fragment fragment) {
+    private void addFragment(BaseFragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.container, fragment);

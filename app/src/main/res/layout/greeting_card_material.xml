@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- Card visible layout -->
+    <it.gmariotti.cardslib.library.view.ForegroundLinearLayout
+        android:id="@+id/card_main_layout"
+        style="@style/card.native.main_layout_foreground"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <it.gmariotti.cardslib.library.view.component.CardThumbnailView
+            style="@style/greeting_card_thumbnail"
+            android:id="@+id/card_thumbnail_layout"
+            card:card_thumbnail_layout_resourceID="@layout/greeting_card_thumbnail_material" />
+
+        <!-- Main Content View -->
+        <FrameLayout
+            android:id="@+id/card_main_content_layout"
+            style="@style/material_greeting_card_content_outer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+    </it.gmariotti.cardslib.library.view.ForegroundLinearLayout>
+
+    <FrameLayout
+        android:id="@+id/card_content_expand_layout"
+        style="@style/card.native.main_contentExpand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ViewStub
+        android:id="@+id/card_supplemental_actions_vs"
+        android:inflatedId="@+id/card_supplemental_actions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout><!-- From: file:/home/gabriele/Lavoro/Android/AndroidStudioProjects/wrks/cardslib/library-cards/src/main/res/layout/native_material_largeimage_text_card.xml -->

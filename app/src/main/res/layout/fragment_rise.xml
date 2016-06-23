@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<in.srain.cube.views.ptr.PtrFrameLayout
+    android:id="@+id/greeting_card_ptr_frame"
+    xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    cube_ptr:ptr_resistance="1.7"
+    cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+    cube_ptr:ptr_duration_to_close="300"
+    cube_ptr:ptr_duration_to_close_header="2000"
+    cube_ptr:ptr_keep_header_when_refresh="true"
+    cube_ptr:ptr_pull_to_fresh="false"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView
+            xmlns:card="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/morning_contents"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            card:list_card_layout_resourceID="@layout/recyclerview_greeting_card_layout"
+            style="@style/card_material"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true">
+
+            <com.dd.CircularProgressButton
+                android:id="@+id/sleep_btn"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:layout_margin="10dp"
+                app:cpb_textComplete="不起"
+                app:cpb_textError="失败"
+                app:cpb_textIdle="不起" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                app:met_clearButton="true"
+                android:text="帅的人已经醒来"/>
+
+            <com.dd.CircularProgressButton
+                android:id="@+id/rise_btn"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:layout_margin="10dp"
+                app:cpb_textComplete="起床"
+                app:cpb_textError="失败"
+                app:cpb_textIdle="起床" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</in.srain.cube.views.ptr.PtrFrameLayout>

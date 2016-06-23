@@ -23,7 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.edu.seu.udo.R;
-import cn.edu.seu.udo.bean.WeatherBean;
+import cn.edu.seu.udo.model.entities.WeatherBean;
 import cn.edu.seu.udo.model.entities.Tool;
 import cn.edu.seu.udo.mvp.presenter.WeatherPresenter;
 import cn.edu.seu.udo.mvp.view.WeatherIView;
@@ -40,6 +40,10 @@ import cn.edu.seu.udo.utils.ToastUtil;
  */
 public class HomeFragment extends BaseFragment implements AdapterView.OnItemClickListener, OnItemClickListener,
         WeatherIView<WeatherBean> {
+
+    public static final String TAG = "home";
+
+    public static final String START = "start_home";
 
     @BindView(R.id.banner)
     ConvenientBanner banner;
@@ -106,11 +110,18 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.i("Home", "ListView item clicked");
         Tool tool = (Tool) toolsView.getAdapter().getItem(position);
-        if (tool.getName().equals("study")) {
-            fragmentInteractionListener.onFragmentInteraction(StudyFragment.START);
-        } else {
-            ToastUtil.show(getActivity(), tool.getName());
+        String interaction = null;
+        switch (tool.getName()) {
+            case "study":
+                interaction = StudyFragment.START;
+                break;
+            case "rise":
+                interaction = RiseFragment.START;
+                break;
+            default:
+                ToastUtil.show(getActivity(), tool.getName());
         }
+        fragmentInteractionListener.onFragmentInteraction(interaction);
     }
 
     /**
@@ -122,7 +133,6 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     public void onItemClick(int position) {
         Log.i("Home", "Banner clicked on " + position);
         weatherPresenter.getWeather("南京");
-        ToastUtil.show(getActivity(), "Banner");
     }
 
     private void setupBanner() {
@@ -146,6 +156,11 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         ToolAdapter toolAdapter = new ToolAdapter(getActivity(), tools(), settings);
         toolsView.setOnItemClickListener(this);
         toolsView.setAdapter(toolAdapter);
+    }
+
+    @Override
+    public String getName() {
+        return TAG;
     }
 
     @Override

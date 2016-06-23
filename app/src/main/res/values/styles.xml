@@ -17,4 +17,54 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="greeting_card">
+        <item name="android:layout_marginLeft">@dimen/greeting_card_margin_left</item>
+        <item name="android:layout_marginRight">@dimen/greeting_card_margin_right</item>
+        <item name="android:layout_marginBottom">@dimen/greeting_card_margin_bottom</item>
+        <item name="android:layout_marginTop">@dimen/greeting_card_margin_top</item>
+    </style>
+
+    <style name="greeting_card_thumbnail">
+        <item name="android:layout_width">@dimen/greeting_card_margin_thumbnail_width</item>
+        <item name="android:layout_height">@dimen/greeting_card_margin_thumbnail_height</item>
+    </style>
+
+    <style name="greeting_card.base">
+
+    </style>
+
+    <style name="card_material">
+        <item name="android:layout_marginTop">@dimen/recyclerview_greeting_card_margin_top</item>
+        <item name="android:layout_marginBottom">@dimen/recyclerview_greeting_card_margin_bottom</item>
+        <item name="android:layout_marginLeft">@dimen/recyclerview_greeting_card_margin_left</item>
+        <item name="android:layout_marginRight">@dimen/recyclerview_greeting_card_margin_right</item>
+    </style>
+
+    <style name="material_greeting_card_content_outer_layout" parent="card.native.content_outer_layout">
+        <item name="android:paddingLeft">@dimen/material_greeting_card_content_padding_left</item>
+        <item name="android:paddingRight">@dimen/material_greeting_card_content_padding_right</item>
+        <item name="android:paddingTop">@dimen/material_greeting_card_content_padding_top</item>
+        <item name="android:paddingBottom">@dimen/material_greeting_card_content_padding_bottom</item>
+    </style>
+
+    <style name="material_greeting_card_content_name">
+        <item name="android:paddingLeft">@dimen/material_greeting_card_content_name_padding_left</item>
+        <item name="android:paddingRight">@dimen/material_greeting_card_content_name_padding_right</item>
+        <item name="android:paddingTop">@dimen/material_greeting_card_content_name_padding_top</item>
+        <item name="android:paddingBottom">@dimen/material_greeting_card_content_name_padding_bottom</item>
+    </style>
+
+    <style name="material_greeting_card_content_time">
+        <item name="android:paddingLeft">@dimen/material_greeting_card_content_time_padding_left</item>
+        <item name="android:paddingRight">@dimen/material_greeting_card_content_time_padding_right</item>
+        <item name="android:paddingTop">@dimen/material_greeting_card_content_time_padding_top</item>
+        <item name="android:paddingBottom">@dimen/material_greeting_card_content_time_padding_bottom</item>
+    </style>
+
+    <style name="material_greeting_card_content_words">
+        <item name="android:paddingLeft">@dimen/material_greeting_card_content_words_padding_left</item>
+        <item name="android:paddingRight">@dimen/material_greeting_card_content_words_padding_right</item>
+        <item name="android:paddingTop">@dimen/material_greeting_card_content_words_padding_top</item>
+        <item name="android:paddingBottom">@dimen/material_greeting_card_content_words_padding_bottom</item>
+    </style>
 </resources>
