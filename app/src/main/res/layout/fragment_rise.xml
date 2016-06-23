@@ -14,6 +14,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rise_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -24,14 +25,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             card:list_card_layout_resourceID="@layout/recyclerview_greeting_card_layout"
-            style="@style/card_material"/>
+            style="@style/card_material"
+            android:layout_alignParentTop="true"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:orientation="horizontal"
             android:background="@android:color/white"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true" >
 
             <com.dd.CircularProgressButton
                 android:id="@+id/sleep_btn"
