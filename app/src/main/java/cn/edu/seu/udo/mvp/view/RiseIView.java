@@ -10,4 +10,8 @@ import cn.edu.seu.udo.model.entities.Greeting;
  */
 public interface RiseIView extends IView {
     void showGreeting(List<Greeting> greetings);
+
+    void notifyRandomGreeting(String greeting);
+
+    void notifyGreetingSend();
 }

@@ -10,4 +10,16 @@
     <color name="pc_study_detail_3">#0000FF</color>
     <color name="pc_study_detail_4">#FF0000</color>
     <color name="pc_study_detail_5">#F0F00F</color>
+
+    <color name="greeting_card_color1">#2196F3</color>
+    <color name="greeting_card_color2">#9c27b0</color>
+    <color name="greeting_card_color3">#AFB42B</color>
+    <color name="greeting_card_color4">#607D8B</color>
+    <color name="greeting_card_color5">#F57C00</color>
+    <color name="greeting_card_color6">#E91E63</color>
+    <color name="greeting_card_color7">#673ab7</color>
+    <color name="greeting_card_color8">#607D8B</color>
+
+    <color name="greeting_card_text_color">#ffffff</color>
+
 </resources>

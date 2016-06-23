@@ -30,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:orientation="horizontal"
+            android:background="@android:color/white"
             android:layout_alignParentBottom="true">
 
             <com.dd.CircularProgressButton
@@ -44,6 +45,7 @@
                 app:cpb_textIdle="不起" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/my_greeting"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"

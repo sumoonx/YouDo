@@ -8,11 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.dd.CircularProgressButton;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.edu.seu.udo.R;
 import cn.edu.seu.udo.model.entities.Greeting;
 import cn.edu.seu.udo.mvp.presenter.RisePresenter;
@@ -21,6 +27,8 @@ import cn.edu.seu.udo.ui.RentalsSunHeaderView;
 import cn.edu.seu.udo.ui.view.GreetingCard;
 import cn.edu.seu.udo.ui.view.GreetingExpand;
 import cn.edu.seu.udo.ui.view.GreetingThumbnail;
+import cn.edu.seu.udo.utils.KeyBoardUtil;
+import cn.edu.seu.udo.utils.LogUtil;
 import cn.edu.seu.udo.utils.ToastUtil;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
@@ -35,19 +43,27 @@ import it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView;
  * Author: Jeremy Xu on 2016/6/21 11:20
  * E-mail: jeremy_xm@163.com
  */
-public class RiseFragment extends BaseFragment implements RiseIView {
+public class RiseFragment extends BaseFragment implements RiseIView, View.OnClickListener {
 
     public static final String TAG = "rise";
 
     public static final String START = "start_rise";
 
-    @BindView(R.id.greeting_card_ptr_frame) PtrFrameLayout frameLayout;
-    @BindView(R.id.morning_contents) CardRecyclerView greetingCards;
+
+    @BindView(R.id.greeting_card_ptr_frame)
+    PtrFrameLayout frameLayout;
+    @BindView(R.id.morning_contents)
+    CardRecyclerView greetingCards;
     CardArrayRecyclerViewAdapter cardAdapter;
     List<Greeting> greetings;
+    @BindView(R.id.sleep_btn)
+    CircularProgressButton sleepBtn;
+    @BindView(R.id.my_greeting)
+    MaterialEditText myGreeting;
+    @BindView(R.id.rise_btn)
+    CircularProgressButton riseBtn;
     private GridLayoutManager manager;
-    protected RisePresenter presenter;
-
+    private RisePresenter presenter;
 
     @Override
     public void onStart() {
@@ -68,8 +84,95 @@ public class RiseFragment extends BaseFragment implements RiseIView {
 
         setupGreetingCards();
         setupPtrHeader();
+        setupRiseMenu();
 
         return view;
+    }
+
+    private void setupRiseMenu() {
+        sleepBtn.setOnClickListener(this);
+        riseBtn.setOnClickListener(this);
+        myGreeting.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    KeyBoardUtil.openKeybord(myGreeting, getActivity());
+                    LogUtil.i("has focus");
+                } else {
+                    KeyBoardUtil.closeKeybord(myGreeting, getActivity());
+                    LogUtil.i("lose focus");
+                }
+            }
+        });
+    }
+
+
+    private String randomGreeting;
+    @Override
+    public void notifyRandomGreeting(String greeting) {
+        randomGreetingSuccess = true;
+        randomGreeting = greeting;
+    }
+
+    @Override
+    public void notifyGreetingSend() {
+        greetingSend = true;
+    }
+
+    private boolean greetingSend;
+
+    private boolean randomGreetingSuccess;
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.sleep_btn:
+                trySleep();
+                break;
+            case R.id.rise_btn:
+                tryRise();
+                break;
+        }
+    }
+
+    private void tryRise() {
+        greetingSend = false;
+        sleepBtn.setClickable(false);
+        riseBtn.setIndeterminateProgressMode(true);
+        riseBtn.setProgress(50);
+        presenter.sendGreeting(myGreeting.getText().toString());
+        getGreetingAfter();
+        riseBtn.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (greetingSend) {
+                    riseBtn.setProgress(0);
+                    myGreeting.setText("");
+                } else {
+                    riseBtn.setProgress(-1);
+                }
+                sleepBtn.setClickable(true);
+            }
+        }, 500);
+    }
+
+    private void trySleep() {
+        randomGreetingSuccess = false;
+        riseBtn.setClickable(false);
+        presenter.getRandomGreeting();
+        sleepBtn.setIndeterminateProgressMode(true);
+        sleepBtn.setProgress(50);
+        sleepBtn.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (randomGreetingSuccess) {
+                    sleepBtn.setProgress(0);
+                    myGreeting.setText(randomGreeting);
+                } else {
+                    sleepBtn.setProgress(-1);
+                }
+                riseBtn.setClickable(true);
+            }
+        }, 1000);
     }
 
     private void setupPtrHeader() {
@@ -104,12 +207,13 @@ public class RiseFragment extends BaseFragment implements RiseIView {
     }
 
     boolean isLoading = false;
+
     private void getGreetingAfter() {
         isLoading = true;
         if (greetings == null) {
             greetings = presenter.getAfter(null);
         } else {
-            greetings.addAll(presenter.getAfter(greetings.get(0)));
+            greetings.addAll(0, presenter.getAfter(greetings.get(0)));
         }
         cardAdapter.setCards(getGreetingCards(greetings));
         cardAdapter.notifyDataSetChanged();
@@ -122,7 +226,7 @@ public class RiseFragment extends BaseFragment implements RiseIView {
         if (greetings == null) {
             greetings = presenter.getAfter(null);
         } else {
-            greetings.addAll(presenter.getAfter(greetings.get(greetings.size() - 1)));
+            greetings.addAll(presenter.getBefore(greetings.get(greetings.size() - 1)));
             if (greetings.get(greetings.size() - 1).isLast()) {
                 noMoreGreeting = true;
                 greetings.remove(greetings.size() - 1);
@@ -140,6 +244,7 @@ public class RiseFragment extends BaseFragment implements RiseIView {
     }
 
     private boolean noMoreGreeting = false;
+
     private void setupGreetingCards() {
         cardAdapter = new CardArrayRecyclerViewAdapter(getActivity(), null);
         greetingCards.setHasFixedSize(false);
@@ -148,7 +253,7 @@ public class RiseFragment extends BaseFragment implements RiseIView {
         manager = new GridLayoutManager(getActivity(), 1);
         greetingCards.setLayoutManager(manager);
         greetingCards.setItemAnimator(new DefaultItemAnimator());
-        greetingCards.addOnScrollListener(new CardRecyclerView.OnScrollListener(){
+        greetingCards.addOnScrollListener(new CardRecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -174,6 +279,7 @@ public class RiseFragment extends BaseFragment implements RiseIView {
             CardExpand expand = new GreetingExpand(getActivity(), greeting);
             expand.setTitle("This is expandable");
             card.addCardExpand(expand);
+            card.setBackgroundColorResourceId(greeting.getColor());
             cards.add(card);
         }
         return cards;
@@ -190,7 +296,7 @@ public class RiseFragment extends BaseFragment implements RiseIView {
     }
 
     private void initInjector() {
-        presenter =  new RisePresenter();
+        presenter = new RisePresenter();
     }
 
 }

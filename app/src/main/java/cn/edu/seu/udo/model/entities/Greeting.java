@@ -1,10 +1,23 @@
 package cn.edu.seu.udo.model.entities;
 
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
+
+import cn.edu.seu.udo.R;
+
 /**
  * Author: Jeremy Xu on 2016/6/21 17:42
  * E-mail: jeremy_xm@163.com
  */
 public class Greeting {
+
+    @ColorRes
+    public static final int[] colors = {R.color.greeting_card_color1,
+            R.color.greeting_card_color2, R.color.greeting_card_color3,
+            R.color.greeting_card_color4, R.color.greeting_card_color5,
+            R.color.greeting_card_color6, R.color.greeting_card_color7,
+            R.color.greeting_card_color8,};
+
     private long id;
     private int thumbnail;
     private String nickName;
@@ -53,5 +66,10 @@ public class Greeting {
 
     public boolean isLast() {
         return id == 0;
+    }
+
+    @ColorRes
+    public int getColor() {
+        return colors[(int)Math.floor(Math.random() * 7) + 1];
     }
 }

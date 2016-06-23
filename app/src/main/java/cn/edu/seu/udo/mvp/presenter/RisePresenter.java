@@ -34,6 +34,15 @@ public class RisePresenter implements Presenter<RiseIView> {
         return fakeGreetings();
     }
 
+    private int i = 0;
+    public void getRandomGreeting() {
+        view.notifyRandomGreeting("帅的人已经醒来+" + (i++) + "!");
+    }
+
+    public void sendGreeting(String greeting) {
+        view.notifyGreetingSend();
+    }
+
     private List<Greeting> fakeGreetings() {
         List<Greeting> greetings = new ArrayList<>();
         Greeting greeting = new Greeting(1, R.drawable.invoker, "Invoker", "Whatever is worth doing is worth doing well.", new Time(8, 26));
