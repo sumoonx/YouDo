@@ -21,5 +21,6 @@
     <color name="greeting_card_color8">#607D8B</color>
 
     <color name="greeting_card_text_color">#ffffff</color>
+    <color name="greeting_card_backgroud">#ffffff</color>
 
 </resources>

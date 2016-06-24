@@ -1,5 +1,6 @@
 package cn.edu.seu.udo.model.entities;
 
+import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 
@@ -24,12 +25,22 @@ public class Greeting {
     private String content;
     private Time time;
 
+    private static final Greeting empty = new Greeting(0, 0, "", "", new Time(0, 0));
+
     public Greeting(long id, int thumbnail, String nickName, String content, Time time) {
         this.id = id;
         this.thumbnail = thumbnail;
         this.nickName = nickName;
         this.content = content;
         this.time = time;
+    }
+
+    public static Greeting getEmpty() {
+        return empty;
+    }
+
+    public boolean isEmpty() {
+        return id == 0;
     }
 
     public long getId() {
@@ -64,12 +75,9 @@ public class Greeting {
         return "终于达成了90%的起床成功率！";
     }
 
-    public boolean isLast() {
-        return id == 0;
-    }
-
     @ColorRes
     public int getColor() {
+        if (isEmpty()) return R.color.greeting_card_backgroud;
         return colors[(int)Math.floor(Math.random() * 7) + 1];
     }
 }

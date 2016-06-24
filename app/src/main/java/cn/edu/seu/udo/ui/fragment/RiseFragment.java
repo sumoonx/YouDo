@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.dd.CircularProgressButton;
@@ -43,9 +44,7 @@ import it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView;
  * E-mail: jeremy_xm@163.com
  */
 
-//TODO:RecyclerView和PullToRefresh之间的动作冲突
 //TODO:软键盘关闭操作（点击任何其他控件都将关闭）
-//TODO:底部留空白，否则被遮住
 public class RiseFragment extends BaseFragment implements RiseIView, OnClickListener {
 
     public static final String TAG = "rise";
@@ -57,10 +56,11 @@ public class RiseFragment extends BaseFragment implements RiseIView, OnClickList
     PtrFrameLayout ptrFrameLayout;
 
     private GridLayoutManager manager;
+
     @BindView(R.id.morning_contents)
     CardRecyclerView greetingView;
-    CardArrayRecyclerViewAdapter greetingAdapter;
-    List<Greeting> greetings;
+
+    List<Greeting> mGreetings;
 
     @BindView(R.id.sleep_btn)
     CircularProgressButton sleepBtn;
@@ -71,11 +71,18 @@ public class RiseFragment extends BaseFragment implements RiseIView, OnClickList
 
     private RisePresenter presenter;
 
+    //state
+    boolean isLoading;
+    private boolean randomGreetingSuccess;
+    private String randomGreeting;
+    private boolean greetingSend;
+    private boolean noMoreGreeting = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        setupGreetingCards();
+        setupGreetingView();
         setupPtrHeader();
         setupRiseMenu();
 
@@ -105,7 +112,7 @@ public class RiseFragment extends BaseFragment implements RiseIView, OnClickList
                 tryRise();
                 break;
             case R.id.greeting_card_ptr_frame:
-                KeyBoardUtil.closeKeybord(myGreeting, getActivity());
+                myGreeting.clearFocus();
                 break;
             case R.id.rise_content:
                 myGreeting.clearFocus();
@@ -113,7 +120,6 @@ public class RiseFragment extends BaseFragment implements RiseIView, OnClickList
         }
     }
 
-    boolean isLoading;
     private void setupPtrHeader() {
         //set header for ptrFrame.
         final RentalsSunHeaderView header = new RentalsSunHeaderView(getActivity());
@@ -137,22 +143,29 @@ public class RiseFragment extends BaseFragment implements RiseIView, OnClickList
         ptrFrameLayout.setPtrHandler(new PtrHandler() {
             @Override
             public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-                return !isLoading;
+                int position = manager.findFirstVisibleItemPosition();
+                View item = manager.findViewByPosition(position);
+                int top = item.getTop();
+                boolean rst = position == 0 && top < 15;
+                return rst;
             }
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 getGreetingAfter();
-                ptrFrameLayout.refreshComplete();
             }
         });
+//        ptrFrameLayout.disableWhenHorizontalMove(true);
     }
 
-    private void setupGreetingCards() {
-        greetingAdapter = new CardArrayRecyclerViewAdapter(getActivity(), null);
+    private void setupGreetingView() {
+        mGreetings = new ArrayList<>();
+        mGreetings.add(Greeting.getEmpty());
+        CardArrayRecyclerViewAdapter greetingAdapter = new CardArrayRecyclerViewAdapter(getActivity(), getGreetingCards(mGreetings));
         greetingView.setHasFixedSize(false);
         greetingView.setLayoutManager(new LinearLayoutManager(getActivity()));
         greetingView.setAdapter(greetingAdapter);
+
         manager = new GridLayoutManager(getActivity(), 1);
         greetingView.setLayoutManager(manager);
         greetingView.setItemAnimator(new DefaultItemAnimator());
@@ -163,16 +176,23 @@ public class RiseFragment extends BaseFragment implements RiseIView, OnClickList
                 if (newState == CardRecyclerView.SCROLL_STATE_IDLE) {
                     int lastPosition = manager.findLastVisibleItemPosition();
                     if (noMoreGreeting) ToastUtil.show(getActivity(), "Bottom hitted!");
-                    else if (lastPosition >= manager.getItemCount() - 4) {
+                    else if (lastPosition >= manager.getItemCount() - 2) {
                         getGreetingBefore();
                     }
                 }
             }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                LogUtil.i("dy is: " + dy);
+            }
         });
+        greetingView.requestDisallowInterceptTouchEvent(true);
     }
 
     private void setupRiseMenu() {
-        RelativeLayout layout = (RelativeLayout) ptrFrameLayout.findViewById(R.id.rise_content);
+        LinearLayout layout = (LinearLayout) ptrFrameLayout.findViewById(R.id.rise_content);
         layout.setOnClickListener(this);
         sleepBtn.setOnClickListener(this);
         riseBtn.setOnClickListener(this);
@@ -190,18 +210,38 @@ public class RiseFragment extends BaseFragment implements RiseIView, OnClickList
         });
     }
 
-    private boolean randomGreetingSuccess;
-    private String randomGreeting;
     @Override
     public void notifyRandomGreeting(String greeting) {
         randomGreetingSuccess = true;
         randomGreeting = greeting;
     }
 
-    private boolean greetingSend;
     @Override
     public void notifyGreetingSend() {
         greetingSend = true;
+    }
+
+    @Override
+    public void notifyAfterLoaded(List<Greeting> greetings) {
+        mGreetings.addAll(0, greetings);
+        CardArrayRecyclerViewAdapter greetingAdapter = (CardArrayRecyclerViewAdapter) greetingView.getAdapter();
+        greetingAdapter.setCards(getGreetingCards(mGreetings));
+        greetingAdapter.notifyDataSetChanged();
+        ptrFrameLayout.refreshComplete();
+        isLoading = false;
+    }
+
+    @Override
+    public void notifyBeforeLoaded(List<Greeting> greetings) {
+        checkEmptyGreeting(greetings);
+        if (!noMoreGreeting) {
+            mGreetings.remove(mGreetings.size() - 1);
+            mGreetings.addAll(greetings);
+            CardArrayRecyclerViewAdapter greetingAdapter = (CardArrayRecyclerViewAdapter) greetingView.getAdapter();
+            greetingAdapter.setCards(getGreetingCards(mGreetings));
+            greetingAdapter.notifyDataSetChanged();
+        }
+        isLoading = false;
     }
 
     private void tryRise() {
@@ -246,56 +286,43 @@ public class RiseFragment extends BaseFragment implements RiseIView, OnClickList
     }
     private void getGreetingAfter() {
         isLoading = true;
-        if (greetings == null) {
-            greetings = presenter.getAfter(null);
-        } else {
-            greetings.addAll(0, presenter.getAfter(greetings.get(0)));
-        }
-        greetingAdapter.setCards(getGreetingCards(greetings));
-        greetingAdapter.notifyDataSetChanged();
-        isLoading = false;
+        presenter.getAfter(mGreetings.get(0));
     }
 
     private void getGreetingBefore() {
         if (noMoreGreeting) return;
         isLoading = true;
-        if (greetings == null) {
-            greetings = presenter.getAfter(null);
-        } else {
-            greetings.addAll(presenter.getBefore(greetings.get(greetings.size() - 1)));
-            if (greetings.get(greetings.size() - 1).isLast()) {
-                noMoreGreeting = true;
-                greetings.remove(greetings.size() - 1);
-            }
-        }
-        greetingAdapter.setCards(getGreetingCards(greetings));
-        greetingAdapter.notifyDataSetChanged();
-        isLoading = false;
+        int lastPosition = mGreetings.size() > 1 ? mGreetings.size() - 1 : 0;
+        presenter.getBefore(mGreetings.get(lastPosition));
     }
 
-    @Override
-    public void showGreeting(List<Greeting> greetings) {
-        greetingAdapter.setCards(getGreetingCards(greetings));
-        greetingView.getAdapter().notifyDataSetChanged();
+    private Card getGreetingCard(Greeting greeting) {
+        if (greeting.isEmpty()) return null;
+        Card card = new GreetingCard(getActivity(), greeting);
+        CardThumbnail thumb = new GreetingThumbnail(getActivity());
+        thumb.setDrawableResource(greeting.getThumbnail());
+        card.addCardThumbnail(thumb);
+        CardExpand expand = new GreetingExpand(getActivity(), greeting);
+        card.addCardExpand(expand);
+        card.setBackgroundColorResourceId(greeting.getColor());
+        return card;
     }
-
-    private boolean noMoreGreeting = false;
 
     private List<Card> getGreetingCards(List<Greeting> greetings) {
         List<Card> cards = new ArrayList<>();
-        for (int i = 0; i < greetings.size(); ++i) {
-            Greeting greeting = greetings.get(i);
-            Card card = new GreetingCard(getActivity(), greeting);
-            CardThumbnail thumb = new GreetingThumbnail(getActivity());
-            thumb.setDrawableResource(greeting.getThumbnail());
-            card.addCardThumbnail(thumb);
-            CardExpand expand = new GreetingExpand(getActivity(), greeting);
-            expand.setTitle("This is expandable");
-            card.addCardExpand(expand);
-            card.setBackgroundColorResourceId(greeting.getColor());
-            cards.add(card);
+        for (Greeting greeting : greetings) {
+            Card card = getGreetingCard(greeting);
+            if (card != null) cards.add(getGreetingCard(greeting));
         }
         return cards;
+    }
+
+    private void checkEmptyGreeting(List<Greeting> greetings) {
+        if (noMoreGreeting) return;
+        if (greetings.get(greetings.size() - 1).isEmpty()) {
+            noMoreGreeting = true;
+            greetings.remove(greetings.size() - 1);
+        }
     }
 
     @Override

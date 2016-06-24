@@ -9,7 +9,10 @@ import cn.edu.seu.udo.model.entities.Greeting;
  * E-mail: jeremy_xm@163.com
  */
 public interface RiseIView extends IView {
-    void showGreeting(List<Greeting> greetings);
+
+    void notifyAfterLoaded(List<Greeting> greetings);
+
+    void notifyBeforeLoaded(List<Greeting> greetings);
 
     void notifyRandomGreeting(String greeting);
 

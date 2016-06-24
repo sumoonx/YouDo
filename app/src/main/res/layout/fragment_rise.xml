@@ -13,20 +13,21 @@
     cube_ptr:ptr_pull_to_fresh="false"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/rise_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical">
 
         <it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView
             xmlns:card="http://schemas.android.com/apk/res-auto"
             android:id="@+id/morning_contents"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             card:list_card_layout_resourceID="@layout/recyclerview_greeting_card_layout"
-            style="@style/card_material"
-            android:layout_alignParentTop="true"/>
+            style="@style/card_material"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,6 +69,6 @@
                 app:cpb_textIdle="起床" />
         </LinearLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </in.srain.cube.views.ptr.PtrFrameLayout>
