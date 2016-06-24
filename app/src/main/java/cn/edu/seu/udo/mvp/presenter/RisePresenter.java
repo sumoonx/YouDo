@@ -56,7 +56,7 @@ public class RisePresenter implements Presenter<RiseIView> {
         greetings.add(greeting);
         greeting = new Greeting(3, R.drawable.invoker, "萨尔", "放个圈圈框框沉默你。", new Time(6, 52));
         greetings.add(greeting);
-        greeting = new Greeting(4, R.drawable.invoker, "卡尔", "真理惟一可靠的标准就是永远自相符合。", new Time(7, 28));
+        greeting = new Greeting(0, R.drawable.invoker, "卡尔", "真理惟一可靠的标准就是永远自相符合。", new Time(7, 28));
         greetings.add(greeting);
         return greetings;
     }

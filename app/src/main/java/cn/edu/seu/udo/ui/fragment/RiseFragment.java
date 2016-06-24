@@ -146,7 +146,7 @@ public class RiseFragment extends BaseFragment implements RiseIView, OnClickList
                 int position = manager.findFirstVisibleItemPosition();
                 View item = manager.findViewByPosition(position);
                 int top = item.getTop();
-                boolean rst = position == 0 && top < 15;
+                boolean rst = position == 0 && top < 15 && top > -5;
                 return rst;
             }
 
