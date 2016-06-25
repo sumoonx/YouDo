@@ -2,15 +2,17 @@ package cn.edu.seu.udo.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Slide;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.dd.CircularProgressButton;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import cn.edu.seu.udo.R;
 import cn.edu.seu.udo.model.entities.Greeting;
 import cn.edu.seu.udo.mvp.presenter.RisePresenter;
@@ -54,8 +57,10 @@ public class RiseFragment extends BaseFragment implements RiseIView, OnClickList
 
     @BindView(R.id.greeting_card_ptr_frame)
     PtrFrameLayout ptrFrameLayout;
+    @BindView(R.id.rise_console)
+    LinearLayout riseConsole;
 
-    private GridLayoutManager manager;
+    private LinearLayoutManager manager;
 
     @BindView(R.id.morning_contents)
     CardRecyclerView greetingView;
@@ -86,6 +91,7 @@ public class RiseFragment extends BaseFragment implements RiseIView, OnClickList
         setupPtrHeader();
         setupRiseMenu();
 
+        ButterKnife.bind(this, view);
         return view;
     }
 
@@ -162,14 +168,14 @@ public class RiseFragment extends BaseFragment implements RiseIView, OnClickList
         mGreetings = new ArrayList<>();
         mGreetings.add(Greeting.getEmpty());
         CardArrayRecyclerViewAdapter greetingAdapter = new CardArrayRecyclerViewAdapter(getActivity(), getGreetingCards(mGreetings));
+        manager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         greetingView.setHasFixedSize(false);
-        greetingView.setLayoutManager(new LinearLayoutManager(getActivity()));
         greetingView.setAdapter(greetingAdapter);
 
-        manager = new GridLayoutManager(getActivity(), 1);
         greetingView.setLayoutManager(manager);
         greetingView.setItemAnimator(new DefaultItemAnimator());
         greetingView.addOnScrollListener(new CardRecyclerView.OnScrollListener() {
+
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -185,7 +191,33 @@ public class RiseFragment extends BaseFragment implements RiseIView, OnClickList
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                LogUtil.i("dy is: " + dy);
+                LogUtil.i("dy is " + dy);
+                if (dy < -30) {
+//                    TranslateAnimation animation = new TranslateAnimation(
+//                            Animation.RELATIVE_TO_PARENT, 0,
+//                            Animation.RELATIVE_TO_PARENT, 0,
+//                            Animation.RELATIVE_TO_PARENT, 0.1f,
+//                            Animation.RELATIVE_TO_PARENT, 0
+//                            );
+//                    animation.setDuration(500);
+//                    animation.setInterpolator(AnimationUtils.loadInterpolator(getActivity(), android.R.anim.accelerate_decelerate_interpolator));
+//                    riseConsole.startAnimation(animation);
+//                    AnimationUtils.makeInAnimation()
+                    Animation animation = AnimationUtils.makeInChildBottomAnimation(getActivity());
+                    riseConsole.setAnimation(animation);
+                    riseConsole.setVisibility(View.VISIBLE);
+                } else if (dy > 30){
+                    riseConsole.setVisibility(View.GONE);
+//                    TranslateAnimation animation = new TranslateAnimation(
+//                            Animation.RELATIVE_TO_PARENT, 0,
+//                            Animation.RELATIVE_TO_PARENT, 0,
+//                            Animation.RELATIVE_TO_PARENT, 0,
+//                            Animation.RELATIVE_TO_PARENT, 0.1f
+//                    );
+//                    animation.setDuration(500);
+//                    animation.setInterpolator(AnimationUtils.loadInterpolator(getActivity(), android.R.anim.accelerate_decelerate_interpolator));
+//                    riseConsole.startAnimation(animation);
+                }
             }
         });
         greetingView.requestDisallowInterceptTouchEvent(true);
@@ -284,6 +316,7 @@ public class RiseFragment extends BaseFragment implements RiseIView, OnClickList
             }
         }, 1000);
     }
+
     private void getGreetingAfter() {
         isLoading = true;
         presenter.getAfter(mGreetings.get(0));

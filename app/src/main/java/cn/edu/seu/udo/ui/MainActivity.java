@@ -11,6 +11,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
+import android.view.Gravity;
 
 import cn.edu.seu.udo.R;
 import cn.edu.seu.udo.ui.fragment.BaseFragment;
@@ -66,7 +68,11 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnFr
                 addFragment(new StudyDetailFragment());
                 break;
             case RiseFragment.START:
-                addFragment(new RiseFragment());
+                RiseFragment fragment = new RiseFragment();
+                Slide slide = new Slide(Gravity.TOP);
+                slide.setDuration(1000);
+                fragment.setEnterTransition(slide);
+                addFragment(fragment);
                 break;
         }
     }

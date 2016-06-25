@@ -4,6 +4,7 @@
     xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
 
     cube_ptr:ptr_resistance="1.7"
     cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
@@ -24,19 +25,18 @@
             xmlns:card="http://schemas.android.com/apk/res-auto"
             android:id="@+id/morning_contents"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
             card:list_card_layout_resourceID="@layout/recyclerview_greeting_card_layout"
             style="@style/card_material"/>
 
         <LinearLayout
+            android:id="@+id/rise_console"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:orientation="horizontal"
-            android:background="@android:color/white"
-            android:layout_alignParentBottom="true"
             android:focusable="true"
-            android:focusableInTouchMode="true" >
+            android:focusableInTouchMode="true">
 
             <com.dd.CircularProgressButton
                 android:id="@+id/sleep_btn"
