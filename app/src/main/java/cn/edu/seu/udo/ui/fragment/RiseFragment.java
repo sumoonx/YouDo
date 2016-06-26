@@ -151,6 +151,7 @@ public class RiseFragment extends BaseFragment implements RiseIView, OnClickList
                 View item = manager.findViewByPosition(position);
                 int top = item.getTop();
                 boolean rst = position == 0 && top < 15 && top > -5;
+                if (rst)    onScrollDown();
                 return rst;
             }
 
@@ -179,8 +180,8 @@ public class RiseFragment extends BaseFragment implements RiseIView, OnClickList
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == CardRecyclerView.SCROLL_STATE_IDLE) {
                     int lastPosition = manager.findLastVisibleItemPosition();
-                    if (noMoreGreeting) ToastUtil.show(getActivity(), "Bottom hitted!");
-                    else if (lastPosition >= manager.getItemCount() - 2) {
+                    if (lastPosition == manager.getItemCount() - 1 && noMoreGreeting) ToastUtil.show(getActivity(), "Bottom hitted!");
+                    if (lastPosition >= manager.getItemCount() - 2 && !noMoreGreeting) {
                         getGreetingBefore();
                     }
                 }
@@ -191,21 +192,17 @@ public class RiseFragment extends BaseFragment implements RiseIView, OnClickList
                 super.onScrolled(recyclerView, dx, dy);
                 LogUtil.i("dy is " + dy);
                 if (dy < -30) {
-//                    TranslateAnimation animation = new TranslateAnimation(
-//                            Animation.RELATIVE_TO_PARENT, 0,
-//                            Animation.RELATIVE_TO_PARENT, 0,
-//                            Animation.RELATIVE_TO_PARENT, 0.1f,
-//                            Animation.RELATIVE_TO_PARENT, 0
-//                            );
-//                    animation.setDuration(500);
-//                    animation.setInterpolator(AnimationUtils.loadInterpolator(getActivity(), android.R.anim.accelerate_decelerate_interpolator));
-//                    riseConsole.startAnimation(animation);
-//                    AnimationUtils.makeInAnimation()
-                    Animation animation = AnimationUtils.makeInChildBottomAnimation(getActivity());
-                    riseConsole.setAnimation(animation);
-                    riseConsole.setVisibility(View.VISIBLE);
-                } else if (dy > 30){
-                    riseConsole.setVisibility(View.GONE);
+                    onScrollDown();
+                } else if (dy > 10){
+                    onScrollUp();
+                }
+            }
+        });
+        greetingView.requestDisallowInterceptTouchEvent(true);
+    }
+
+    private void onScrollUp() {
+        riseConsole.setVisibility(View.GONE);
 //                    TranslateAnimation animation = new TranslateAnimation(
 //                            Animation.RELATIVE_TO_PARENT, 0,
 //                            Animation.RELATIVE_TO_PARENT, 0,
@@ -215,10 +212,22 @@ public class RiseFragment extends BaseFragment implements RiseIView, OnClickList
 //                    animation.setDuration(500);
 //                    animation.setInterpolator(AnimationUtils.loadInterpolator(getActivity(), android.R.anim.accelerate_decelerate_interpolator));
 //                    riseConsole.startAnimation(animation);
-                }
-            }
-        });
-        greetingView.requestDisallowInterceptTouchEvent(true);
+    }
+
+    private void onScrollDown() {
+//        TranslateAnimation animation = new TranslateAnimation(
+//                            Animation.RELATIVE_TO_PARENT, 0,
+//                            Animation.RELATIVE_TO_PARENT, 0,
+//                            Animation.RELATIVE_TO_PARENT, 0.1f,
+//                            Animation.RELATIVE_TO_PARENT, 0
+//                            );
+//                    animation.setDuration(500);
+//                    animation.setInterpolator(AnimationUtils.loadInterpolator(getActivity(), android.R.anim.accelerate_decelerate_interpolator));
+//                    riseConsole.startAnimation(animation);
+//                    AnimationUtils.makeInAnimation()
+        Animation animation = AnimationUtils.makeInChildBottomAnimation(getActivity());
+        riseConsole.setAnimation(animation);
+        riseConsole.setVisibility(View.VISIBLE);
     }
 
     private void setupRiseMenu() {
