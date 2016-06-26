@@ -18,11 +18,14 @@ import cn.edu.seu.udo.R;
 import cn.edu.seu.udo.ui.fragment.BaseFragment;
 import cn.edu.seu.udo.ui.fragment.DrawerFragment;
 import cn.edu.seu.udo.ui.fragment.HomeFragment;
+import cn.edu.seu.udo.ui.fragment.RiseCoolFragment;
 import cn.edu.seu.udo.ui.fragment.RiseFragment;
 import cn.edu.seu.udo.ui.fragment.StudyDetailFragment;
 import cn.edu.seu.udo.ui.fragment.StudyFragment;
 
 public class MainActivity extends AppCompatActivity implements BaseFragment.OnFragmentInteractionListener {
+
+    private static final String START = HomeFragment.START;
 
     private DrawerLayout drawer;
     private BaseFragment contentFragment;
@@ -74,12 +77,16 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnFr
                 fragment.setEnterTransition(slide);
                 addFragment(fragment);
                 break;
+            case RiseCoolFragment.START:
+                RiseCoolFragment fragment1 = new RiseCoolFragment();
+                addFragment(fragment1);
+                break;
         }
     }
 
     //TODO:
     private void backHome() {
-
+        addFragment(HomeFragment.newInstance("", ""));
     }
 
     private void setupDrawer() {
@@ -93,10 +100,11 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.OnFr
     }
 
     private void setupMain() {
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.container, HomeFragment.newInstance("", ""));
-        transaction.commit();
+//        FragmentManager fragmentManager = getFragmentManager();
+//        FragmentTransaction transaction = fragmentManager.beginTransaction();
+//        transaction.replace(R.id.container, HomeFragment.newInstance("", ""));
+//        transaction.commit();
+        onFragmentInteraction(START);
     }
 
     private void addFragment(BaseFragment fragment) {

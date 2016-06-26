@@ -1,4 +1,4 @@
-package cn.edu.seu.udo.ui.view;
+package cn.edu.seu.udo.ui.model;
 
 import android.content.Context;
 import android.view.View;

@@ -1,4 +1,4 @@
-package cn.edu.seu.udo.ui;
+package cn.edu.seu.udo.ui.view;
 
 import android.content.Context;
 import android.widget.TextView;

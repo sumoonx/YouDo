@@ -32,8 +32,8 @@ import cn.edu.seu.udo.model.entities.AppUsage;
 import cn.edu.seu.udo.model.entities.StudyTime;
 import cn.edu.seu.udo.mvp.presenter.StudyDetailPresenter;
 import cn.edu.seu.udo.mvp.view.StudyDetailIView;
-import cn.edu.seu.udo.ui.HourFormatter;
-import cn.edu.seu.udo.ui.StudyDetailMarkerView;
+import cn.edu.seu.udo.ui.model.HourFormatter;
+import cn.edu.seu.udo.ui.view.StudyDetailMarkerView;
 
 /**
  * Author: Jeremy Xu on 2016/6/6 13:17

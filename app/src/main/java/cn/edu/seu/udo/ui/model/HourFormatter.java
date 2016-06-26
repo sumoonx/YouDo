@@ -1,4 +1,4 @@
-package cn.edu.seu.udo.ui;
+package cn.edu.seu.udo.ui.model;
 
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.ValueFormatter;

@@ -1,4 +1,4 @@
-package cn.edu.seu.udo.ui.view;
+package cn.edu.seu.udo.ui.model;
 
 /**
  * Author: Jeremy Xu on 2016/6/3 20:52

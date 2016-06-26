@@ -27,7 +27,7 @@ import cn.edu.seu.udo.model.entities.WeatherBean;
 import cn.edu.seu.udo.model.entities.Tool;
 import cn.edu.seu.udo.mvp.presenter.WeatherPresenter;
 import cn.edu.seu.udo.mvp.view.WeatherIView;
-import cn.edu.seu.udo.ui.view.BannerPreviewHolder;
+import cn.edu.seu.udo.ui.model.BannerPreviewHolder;
 import cn.edu.seu.udo.utils.ToastUtil;
 
 /**
