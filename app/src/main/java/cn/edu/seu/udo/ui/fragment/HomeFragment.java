@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -17,6 +19,7 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.yalantis.flipviewpager.adapter.BaseFlipAdapter;
 import com.yalantis.flipviewpager.utils.FlipSettings;
+import com.yalantis.flipviewpager.view.FlipViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -238,9 +241,21 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         }
 
         @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view = super.getView(position, convertView, parent);
+            FlipViewPager flipViewPager = (FlipViewPager) view.findViewById(R.id.flip_view);
+            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) flipViewPager.getLayoutParams();
+            params.height = 500;
+            flipViewPager.setLayoutParams(params);
+            return view;
+        }
+
+        @Override
         public int getPagesCount() {
             return PAGES;
         }
+
+
 
         private void fillHolder(ToolHolder holder, Tool tool) {
             if (tool != null) holder.toolName.setText(tool.getName());

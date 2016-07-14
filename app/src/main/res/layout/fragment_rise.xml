@@ -36,7 +36,8 @@
             android:layout_height="80dp"
             android:orientation="horizontal"
             android:focusable="true"
-            android:focusableInTouchMode="true">
+            android:focusableInTouchMode="true"
+            android:background="@android:color/transparent">
 
             <com.dd.CircularProgressButton
                 android:id="@+id/sleep_btn"
