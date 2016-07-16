@@ -1,5 +1,7 @@
 package cn.edu.seu.udo.model.entities;
 
+import java.util.Date;
+
 /**
  * Author: Jeremy Xu on 2016/6/22 21:58
  * E-mail: jeremy_xm@163.com
@@ -19,6 +21,10 @@ public class Time {
 
     public int getMinute() {
         return minute;
+    }
+
+    public String getTime(char seprater) {
+        return "" + hour + seprater + minute;
     }
 
     @Override

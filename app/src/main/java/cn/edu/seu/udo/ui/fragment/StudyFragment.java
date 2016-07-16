@@ -12,18 +12,18 @@ import cn.edu.seu.udo.utils.LogUtil;
  * Author: Jeremy Xu on 2016/6/5 22:09
  * E-mail: jeremy_xm@163.com
  */
-public class StudyFragment extends BaseFragment implements StudyIView{
+public class StudyFragment extends ScreenFragment implements StudyIView{
 
-    public static final String TAG = "study";
+    public static final String TAG = "StudyFragment";
 
-    public static final String START = "start_study";
+    public static final String START = ScreenFragment.START + TAG;
 
     @Inject StudyPresenter presenter;
 
     @Override
     public void onStart() {
         super.onStart();
-        initInjector();
+        //initInjector();
         presenter.takeView(this);
     }
 
@@ -34,8 +34,13 @@ public class StudyFragment extends BaseFragment implements StudyIView{
     }
 
     @Override
-    public String getName() {
-        return TAG;
+    public String getTitle() {
+        return "自习";
+    }
+
+    @Override
+    public String getIntent() {
+        return START;
     }
 
     @Override
@@ -46,10 +51,16 @@ public class StudyFragment extends BaseFragment implements StudyIView{
     @Override @OnClick(R.id.start_detail)
     public void showDetail() {
         LogUtil.i("show detail");
-        fragmentInteractionListener.onFragmentInteraction(StudyDetailFragment.START);
+        activityInteraction.doInteract(StudyDetailFragment.START);
     }
 
-    private void initInjector() {
+    @Override
+    protected void initInjector() {
+        super.initInjector();
         presenter =  new StudyPresenter();
     }
+
+    //    private void initInjector() {
+//        presenter =  new StudyPresenter();
+//    }
 }

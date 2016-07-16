@@ -19,11 +19,11 @@ import cn.edu.seu.udo.ui.view.CreditsRollView;
  * Author: Jeremy Xu on 2016/6/25 22:20
  * E-mail: jeremy_xm@163.com
  */
-public class RiseCoolFragment extends BaseFragment implements SeekBar.OnSeekBarChangeListener {
+public class RiseCoolFragment extends ScreenFragment implements SeekBar.OnSeekBarChangeListener {
 
-    public static final String TAG = "rise_cool";
+    public static final String TAG = "RiseCoolFragment";
 
-    public static final String START = "rise_cool_start";
+    public static final String START = ScreenFragment.START + TAG;
 
     private static final float SCROLL_ANIM_DURATION = 30000;    // [ms] = 30 s
 
@@ -53,8 +53,13 @@ public class RiseCoolFragment extends BaseFragment implements SeekBar.OnSeekBarC
     }
 
     @Override
-    public String getName() {
-        return TAG;
+    public String getTitle() {
+        return "早起宣言";
+    }
+
+    @Override
+    public String getIntent() {
+        return START;
     }
 
     @Override

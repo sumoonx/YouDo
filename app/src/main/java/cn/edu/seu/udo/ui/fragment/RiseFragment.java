@@ -46,11 +46,11 @@ import it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView;
  */
 
 //TODO:软键盘关闭操作（点击任何其他控件都将关闭）
-public class RiseFragment extends BaseFragment implements RiseIView, OnClickListener {
+public class RiseFragment extends ScreenFragment implements RiseIView, OnClickListener {
 
-    public static final String TAG = "rise";
+    public static final String TAG = "RiseFragment";
 
-    public static final String START = "start_rise";
+    public static final String START = ScreenFragment.START + TAG;
 
 
     @BindView(R.id.greeting_card_ptr_frame)
@@ -366,8 +366,13 @@ public class RiseFragment extends BaseFragment implements RiseIView, OnClickList
     }
 
     @Override
-    public String getName() {
-        return TAG;
+    public String getTitle() {
+        return "早起";
+    }
+
+    @Override
+    public String getIntent() {
+        return START;
     }
 
     @Override
@@ -375,8 +380,9 @@ public class RiseFragment extends BaseFragment implements RiseIView, OnClickList
         return R.layout.fragment_rise;
     }
 
-    private void initInjector() {
+    @Override
+    protected void initInjector() {
+        super.initInjector();
         presenter = new RisePresenter();
     }
-
 }

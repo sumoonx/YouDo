@@ -8,7 +8,7 @@ import cn.edu.seu.udo.utils.ToastUtil;
  * Author: Jeremy Xu on 2016/6/2 14:02
  * E-mail: jeremy_xm@163.com
  */
-public class DrawerFragment extends BaseFragment {
+public class DrawerFragment extends InteractFragment {
 
     public static final String TAG = "drawer";
 
@@ -24,7 +24,7 @@ public class DrawerFragment extends BaseFragment {
 
     @OnClick(R.id.profile_image)
     protected void startProfile() {
-        fragmentInteractionListener.onFragmentInteraction(HomeFragment.START);
+        activityInteraction.doInteract(HomeFragment.START);
     }
 
     @OnClick(R.id.my_zoe)

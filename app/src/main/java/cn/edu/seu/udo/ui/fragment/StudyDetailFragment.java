@@ -39,11 +39,11 @@ import cn.edu.seu.udo.ui.view.StudyDetailMarkerView;
  * Author: Jeremy Xu on 2016/6/6 13:17
  * E-mail: jeremy_xm@163.com
  */
-public class StudyDetailFragment extends BaseFragment implements StudyDetailIView {
+public class StudyDetailFragment extends ScreenFragment implements StudyDetailIView {
 
-    public static final String TAG = "study_detail";
+    public static final String TAG = "StudyDetailFragment";
 
-    public static final String START = "start_study_detail";
+    public static final String START = ScreenFragment.START + TAG;
 
     private static final int LINE_CHART_ANITIME = 1500;
     private static final int PIE_CHART_ANITIME_X = 1500;
@@ -63,7 +63,7 @@ public class StudyDetailFragment extends BaseFragment implements StudyDetailIVie
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        initInjector();
+        //initInjector();
         presenter.takeView(this);
         setupLineChart();
         setupPieChart();
@@ -78,8 +78,13 @@ public class StudyDetailFragment extends BaseFragment implements StudyDetailIVie
     }
 
     @Override
-    public String getName() {
-        return TAG;
+    public String getTitle() {
+        return "自习详情";
+    }
+
+    @Override
+    public String getIntent() {
+        return START;
     }
 
     @Override
@@ -87,7 +92,9 @@ public class StudyDetailFragment extends BaseFragment implements StudyDetailIVie
         return R.layout.fragment_study_detail;
     }
 
-    private void initInjector() {
+    @Override
+    protected void initInjector() {
+        super.initInjector();
         presenter =  new StudyDetailPresenter();
     }
 

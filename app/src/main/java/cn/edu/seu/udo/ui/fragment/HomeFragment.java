@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -36,17 +35,15 @@ import cn.edu.seu.udo.utils.ToastUtil;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link HomeFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * {@link cn.edu.seu.udo.ui.fragment.InteractFragment.ActivityInteractionCallback} interface
+ * to handle interactWithActivity events.
  */
-public class HomeFragment extends BaseFragment implements AdapterView.OnItemClickListener, OnItemClickListener,
+public class HomeFragment extends ScreenFragment implements AdapterView.OnItemClickListener, OnItemClickListener,
         WeatherIView<WeatherBean> {
 
-    public static final String TAG = "home";
+    public static final String TAG = "HomeFragment";
 
-    public static final String START = "start_home";
+    public static final String START = ScreenFragment.START + TAG;
 
     @BindView(R.id.banner)
     ConvenientBanner banner;
@@ -56,44 +53,13 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
     private WeatherPresenter weatherPresenter;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public HomeFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -113,18 +79,18 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.i("Home", "ListView item clicked");
         Tool tool = (Tool) toolsView.getAdapter().getItem(position);
-        String interaction = null;
+        String intent = null;
         switch (tool.getName()) {
             case "study":
-                interaction = StudyFragment.START;
+                intent = StudyFragment.START;
                 break;
             case "rise":
-                interaction = RiseFragment.START;
+                intent = RiseFragment.START;
                 break;
             default:
                 ToastUtil.show(getActivity(), tool.getName());
         }
-        fragmentInteractionListener.onFragmentInteraction(interaction);
+        activityInteraction.doInteract(intent);
     }
 
     /**
@@ -162,11 +128,6 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     }
 
     @Override
-    public String getName() {
-        return TAG;
-    }
-
-    @Override
     protected int getLayout() {
         return R.layout.fragment_home;
     }
@@ -197,6 +158,16 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public void show(WeatherBean weatherBean) {
         ToastUtil.show(this.getActivity(), weatherBean.getData() + "," + weatherBean.getWendu() + "," + weatherBean.getType());
+    }
+
+    @Override
+    public String getTitle() {
+        return "You Do";
+    }
+
+    @Override
+    public String getIntent() {
+        return START;
     }
 
     class ToolAdapter extends BaseFlipAdapter<Tool> {
@@ -254,8 +225,6 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         public int getPagesCount() {
             return PAGES;
         }
-
-
 
         private void fillHolder(ToolHolder holder, Tool tool) {
             if (tool != null) holder.toolName.setText(tool.getName());
