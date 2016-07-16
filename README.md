@@ -47,4 +47,5 @@ stopCurrentScreen即是将当前Screen移除，回退到上一个Screen，需要
 ## MVP模式
 在mvp的package下分别继承Presenter和IView来实现MVP模式。一般的，一个ScreenFragment需要实现对应的IView接口，拥有一个对应的Presenter引用。
 
+test ljj
 ## TODO
