@@ -1,8 +1,11 @@
 package cn.edu.seu.udo.ui;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -12,31 +15,54 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import cn.edu.seu.udo.R;
-import cn.edu.seu.udo.ui.fragment.BaseFragment;
+import cn.edu.seu.udo.UdoApplication;
 import cn.edu.seu.udo.ui.fragment.DrawerFragment;
 import cn.edu.seu.udo.ui.fragment.HomeFragment;
 import cn.edu.seu.udo.ui.fragment.InteractFragment;
 import cn.edu.seu.udo.ui.fragment.ScreenFragment;
-import cn.edu.seu.udo.utils.LogUtil;
+import cn.edu.seu.udo.utils.AppInfoUtil;
 import cn.edu.seu.udo.utils.ToastUtil;
 
 public class MainActivity extends AppCompatActivity implements InteractFragment.ActivityInteractionCallback {
 
+    public static Activity INSTANCE;
     private static final String START = HomeFragment.START;
 
     private DrawerLayout drawer;
     private TextView title;
 
     private ScreenManager screenManager;
+    private Handler myHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            String lable = AppInfoUtil.getAppLableByPkgName(AppInfoUtil.getAppPkgNameByTop());
+            ToastUtil.show(UdoApplication.getUdoApplication(),lable);
+            return false;
+        }
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        INSTANCE = this;
         setupDrawer();
         setupToolBar();
         setupScreen();
+
+//        new Thread(new Runnable(){
+//            @Override
+//            public void run() {
+//                while (true) {
+//                    try {
+//                        Thread.sleep(1500);
+//                    } catch (Exception e) {
+//
+//                    }
+//                    myHandler.sendEmptyMessage(0);
+//                }
+//            }
+//        }).start();
     }
 
     @Override

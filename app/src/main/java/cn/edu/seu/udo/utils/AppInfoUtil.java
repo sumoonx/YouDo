@@ -1,10 +1,6 @@
 package cn.edu.seu.udo.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.seu.zxj.application.MyApp;
-
+import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
@@ -19,10 +15,16 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.edu.seu.udo.R;
 import cn.edu.seu.udo.UdoApplication;
+import cn.edu.seu.udo.entities.AppInfo;
 
 public class AppInfoUtil {
 
+    @TargetApi(21)
     public static boolean isNoSwitch() {
         long ts = System.currentTimeMillis();
         UsageStatsManager usageStatsManager = (UsageStatsManager) UdoApplication.getUdoApplication()
@@ -45,9 +47,9 @@ public class AppInfoUtil {
     }
 
     /**
-     * 杩斿洖褰撳墠搴旂敤鍖呭悕锛屾殏涓嶆敮鎸?5.0
-     * 
-     * @return AppInfo
+     * 获取前台应用包名
+     *
+     * @return String
      */
     @SuppressWarnings("deprecation")
     public static String getAppPkgNameByTop() {
@@ -69,7 +71,7 @@ public class AppInfoUtil {
             }
             return recentStats.getPackageName();
         } else {
-            Context context = MyApp.getContext();
+            Context context =  UdoApplication.getUdoApplication();
             ActivityManager am =
                     (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
             String packageName = am.getRunningTasks(1).get(0).topActivity.getPackageName();
@@ -78,12 +80,12 @@ public class AppInfoUtil {
     }
 
     /**
-     * 锟斤拷锟捷帮拷锟斤拷锟斤拷取应锟斤拷锟斤拷息
-     * 
+     * 通过包名获取应用信息
+     *
      * @return AppInfo
      */
     public static AppInfo getAppInfoByPkgName(String packageName) {
-        Context context = MyApp.getContext();
+        Context context =  UdoApplication.getUdoApplication();
         PackageManager pm = context.getPackageManager();
         ApplicationInfo info = null;
         AppInfo appInfo = new AppInfo();
@@ -91,13 +93,13 @@ public class AppInfoUtil {
             return appInfo;
         else if (packageName.equals("call")) {
             appInfo.setPackageName(packageName);
-            appInfo.setLabel("閫氳瘽");
-            appInfo.setIcon(MyApp.getContext().getResources().getDrawable(R.drawable.phone));
+            appInfo.setLabel("通话");
+            appInfo.setIcon(UdoApplication.getUdoApplication().getResources().getDrawable(R.drawable.lock));
             return appInfo;
-        } else if (packageName.equals("鍏朵粬")) {
+        } else if (packageName.equals("其他")) {
             appInfo.setPackageName(packageName);
-            appInfo.setLabel("鍏朵粬");
-            appInfo.setIcon(MyApp.getContext().getResources().getDrawable(R.drawable.others));
+            appInfo.setLabel("其他");
+            appInfo.setIcon(UdoApplication.getUdoApplication().getResources().getDrawable(R.drawable.lock));
             return appInfo;
         }
         try {
@@ -111,12 +113,17 @@ public class AppInfoUtil {
         return appInfo;
     }
 
+    /**
+     * 通过包名获取应用名
+     *
+     * @return String
+     */
     public static String getAppLableByPkgName(String packageName) {
         if (packageName.equals("lock"))
-            return "閿佸睆";
-        else if (packageName.equals("call")) return "閫氳瘽";
-        if (packageName.equals("鍏朵粬")) return "鍏朵粬";
-        Context context = MyApp.getContext();
+            return "锁屏";
+        else if (packageName.equals("call")) return "通话";
+        if (packageName.equals("其他")) return "其他";
+        Context context =  UdoApplication.getUdoApplication();
         PackageManager pm = context.getPackageManager();
         ApplicationInfo info = null;
         String lable = "";
@@ -130,18 +137,18 @@ public class AppInfoUtil {
     }
 
     /*
-     * 杩斿洖妗岄潰绋嬪簭鍖呭悕
+     * 获取桌面包名
      */
     public static String getLauncherPackageName() {
         final Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
-        final ResolveInfo res = MyApp.getContext().getPackageManager().resolveActivity(intent, 0);
+        final ResolveInfo res = UdoApplication.getUdoApplication().getPackageManager().resolveActivity(intent, 0);
         if (res.activityInfo == null) {
             // should not happen. A home is always installed, isn't it?
             return null;
         }
         if (res.activityInfo.packageName.equals("android")) {
-            // 鏈夊涓闈㈢▼搴忓瓨鍦紝涓旀湭鎸囧畾榛樿椤规椂锛?
+            // 有多个桌面程序存在，且未指定默认项时；
             return null;
         } else {
             return res.activityInfo.packageName;
@@ -149,11 +156,17 @@ public class AppInfoUtil {
     }
 
     /*
-     * 杩斿洖閫氳瘽绋嬪簭鍖呭悕
+     * 获取桌面应用名
+     */
+    public static String getLauncherLabel() {
+        return getAppLableByPkgName(getLauncherPackageName());
+    }
+    /*
+     * 获取通话程序包名
      */
     public static String getPhonePackageName() {
         Intent intent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + 0));
-        final ResolveInfo res = MyApp.getContext().getPackageManager().resolveActivity(intent, 0);
+        final ResolveInfo res = UdoApplication.getUdoApplication().getPackageManager().resolveActivity(intent, 0);
         if (res.activityInfo == null) {
             return null;
         }
@@ -164,33 +177,31 @@ public class AppInfoUtil {
         }
     }
 
-    public static String getLauncherLabel() {
-        return getAppLableByPkgName(getLauncherPackageName());
-    }
-    
+
+
     /**
-	 * 鏌ヨ鎵嬫満鍐呭簲鐢?
-	 * 
-	 * @param context
-	 * @return
-	 */
+     * 查询手机内应用
+     *
+     * @param context
+     * @return List<PackgeInfo>
+     */
 	public static List<PackageInfo> getAllApps(Context context) {
 		List<PackageInfo> apps = new ArrayList<PackageInfo>();
 		PackageManager pManager = context.getPackageManager();
-		// 鑾峰彇鎵嬫満鍐呮墍鏈夊簲鐢?
+        // 获取手机内所有应用
 		List<PackageInfo> paklist = pManager.getInstalledPackages(0);
 		for (int i = 0; i < paklist.size(); i++) {
 			PackageInfo pak = (PackageInfo) paklist.get(i);
-			// 鍒ゆ柇鏄惁涓洪潪绯荤粺棰勮鐨勫簲鐢ㄧ▼搴?
+            // 判断是否为非系统预装的应用程序
 			if ((pak.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) <= 0) {
 				// customs applications
 				apps.add(pak);
 			}
 		}
-		
+
 		for (int i = 0; i < paklist.size(); i++) {
 			PackageInfo pak = (PackageInfo) paklist.get(i);
-			// 鍒ゆ柇鏄惁涓洪潪绯荤粺棰勮鐨勫簲鐢ㄧ▼搴?
+            // 判断是否为非系统预装的应用程序
 			if ((pak.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) > 0) {
 				// customs applications
 				apps.add(pak);
