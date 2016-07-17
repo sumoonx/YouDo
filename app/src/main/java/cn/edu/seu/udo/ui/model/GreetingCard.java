@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import cn.edu.seu.udo.R;
-import cn.edu.seu.udo.model.entities.Greeting;
+import cn.edu.seu.udo.entities.Greeting;
 import it.gmariotti.cardslib.library.internal.Card;
 
 /**

@@ -1,7 +1,7 @@
 package cn.edu.seu.udo.mvp.presenter;
 
-import cn.edu.seu.udo.model.entities.WeatherBean;
-import cn.edu.seu.udo.model.entities.WeatherModel;
+import cn.edu.seu.udo.entities.WeatherBean;
+import cn.edu.seu.udo.mvp.model.WeatherModel;
 import cn.edu.seu.udo.mvp.view.WeatherIView;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;

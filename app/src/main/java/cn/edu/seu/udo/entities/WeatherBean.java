@@ -1,4 +1,4 @@
-package cn.edu.seu.udo.model.entities;
+package cn.edu.seu.udo.entities;
 
 /**
  * Created by rhg on 2016/6/6.
