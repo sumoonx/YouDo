@@ -48,7 +48,7 @@ public class StudyFragment extends ScreenFragment implements StudyIView{
         return R.layout.fragment_study;
     }
 
-    @Override @OnClick(R.id.start_detail)
+    @Override @OnClick(R.id.btn_learnDetail)
     public void showDetail() {
         LogUtil.i("show detail");
         activityInteraction.doInteract(StudyDetailFragment.START);

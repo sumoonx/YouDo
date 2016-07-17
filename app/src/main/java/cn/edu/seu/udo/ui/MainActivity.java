@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements InteractFragment.
         ImageView imageView = (ImageView) toolbar.findViewById(R.id.toolbar_icon);
 //        Drawable drawable = new IconicsDrawable(this)
 //                .icon(MaterialDesignIconic.Icon.gmi_arrow_back);
-        imageView.setImageResource(R.drawable.back);
+        imageView.setImageResource(R.drawable.buildings);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
