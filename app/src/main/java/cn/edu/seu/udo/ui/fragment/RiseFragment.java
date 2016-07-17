@@ -28,7 +28,7 @@ import cn.edu.seu.udo.ui.view.RentalsSunHeaderView;
 import cn.edu.seu.udo.ui.model.GreetingCard;
 import cn.edu.seu.udo.ui.model.GreetingExpand;
 import cn.edu.seu.udo.ui.model.GreetingThumbnail;
-import cn.edu.seu.udo.utils.KeyBoardUtil;
+import cn.edu.seu.udo.mvp.presenter.KeyBoardUtil;
 import cn.edu.seu.udo.utils.LogUtil;
 import cn.edu.seu.udo.utils.ToastUtil;
 import in.srain.cube.views.ptr.PtrFrameLayout;

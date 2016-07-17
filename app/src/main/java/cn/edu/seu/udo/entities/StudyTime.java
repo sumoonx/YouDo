@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import cn.edu.seu.udo.service.TimeAxisItem;
+import cn.edu.seu.udo.utils.AppInfoUtil;
+import cn.edu.seu.udo.utils.LogUtil;
+
 /**
  * Author: Jeremy Xu on 2016/4/11 10:30
  * E-mail: jeremy_xm@163.com
@@ -21,6 +25,14 @@ public class StudyTime implements Comparable<StudyTime> {
         this.day = day;
         this.rank = rank;
         setAppUsages(appUsages);
+    }
+
+    public StudyTime(String day, int rank, UserRecord record) {
+        this.day = day;
+        this.rank = rank;
+        LogUtil.i(record.getRecordTimeString() + "==>" + record.getData().getTotalTime()/1000f);
+        this.totalHour =  record.getData().getTotalTime()/1000f;
+        setAppUsages(record);
     }
 
     public StudyTime(String day, List<AppUsage> appUsages) {
@@ -41,6 +53,14 @@ public class StudyTime implements Comparable<StudyTime> {
         for (AppUsage model :
                 appUsages) {
             totalHour += model.getHour();
+        }
+    }
+
+    public void setAppUsages(UserRecord record) {
+        appUsages = new ArrayList<AppUsage>();
+        ArrayList<TimeAxisItem> appTimeList = record.getData().getAppTimeList();
+        for(TimeAxisItem item : appTimeList){
+            appUsages.add(new AppUsage(AppInfoUtil.getAppLableByPkgName(item.getPkgName()),(float)item.getTimeSeconds()));
         }
     }
 
