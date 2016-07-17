@@ -38,14 +38,19 @@ public class StudyDetailPresenter extends Presenter<StudyDetailIView> {
     }
 
     public void getStudyTimes() {
-        iView.renderStudyTimes(studyTimes);
-        iView.renderRank(studyTimes.get(studyTimes.size() - 1).getRank());
-        iView.renderAppUsages(studyTimes.get(studyTimes.size() - 1).getAppUsageBrief());
+        if(userRecords.size()!=0) {
+            iView.renderStudyTimes(studyTimes);
+            iView.renderRank(studyTimes.get(studyTimes.size() - 1).getRank());
+            iView.renderAppUsages(studyTimes.get(studyTimes.size() - 1).getAppUsageBrief());
+        }
     }
 
     public void getAppUsage(String day) {
-        List<AppUsage> usageModels = getStudyTime(day).getAppUsageBrief();
-        iView.renderAppUsages(usageModels);
+        StudyTime studyTime = getStudyTime(day);
+        if(studyTime!=null) {
+            List<AppUsage> usageModels = studyTime.getAppUsageBrief();
+            iView.renderAppUsages(usageModels);
+        }
     }
 
     private StudyTime getStudyTime(String day) {
@@ -65,26 +70,6 @@ public class StudyDetailPresenter extends Presenter<StudyDetailIView> {
             studyTimes.add(new StudyTime(record.getRecordTimeString(),(int) record.getRank(),record));
         }
         return studyTimes;
-    }
-//
-//    private List<AppUsage> generateAppUsages() {
-//        List<AppUsage> usageModels = new ArrayList<>();
-//        usageModels.add(new AppUsage("微信", getRandomHour()));
-//        usageModels.add(new AppUsage("微博", getRandomHour()));
-//        usageModels.add(new AppUsage("知乎", getRandomHour()));
-//        usageModels.add(new AppUsage("有道", getRandomHour()));
-//        usageModels.add(new AppUsage("邮件", getRandomHour()));
-//        usageModels.add(new AppUsage("优酷", getRandomHour()));
-//        usageModels.add(new AppUsage("土豆", getRandomHour()));
-//        return usageModels;
-//    }
-
-    private float getRandomHour() {
-        return (float) Math.random() * 2;
-    }
-
-    private int getRandomRank() {
-        return (int)(Math.random() * 2000);
     }
 
     private ArrayList<UserRecord> getUseRecords(int num) {
