@@ -23,4 +23,6 @@
     <color name="greeting_card_text_color">#ffffff</color>
     <color name="greeting_card_backgroud">#ffffff</color>
 
+    <color name="rise_detail_markview_color">@android:color/darker_gray</color>
+    <color name="study_detail_markview_color">@android:color/white</color>
 </resources>

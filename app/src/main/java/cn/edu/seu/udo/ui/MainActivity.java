@@ -16,13 +16,12 @@ import cn.edu.seu.udo.ui.fragment.BaseFragment;
 import cn.edu.seu.udo.ui.fragment.DrawerFragment;
 import cn.edu.seu.udo.ui.fragment.HomeFragment;
 import cn.edu.seu.udo.ui.fragment.InteractFragment;
+import cn.edu.seu.udo.ui.fragment.RiseDetailFragment;
 import cn.edu.seu.udo.ui.fragment.ScreenFragment;
 import cn.edu.seu.udo.utils.LogUtil;
 import cn.edu.seu.udo.utils.ToastUtil;
 
 public class MainActivity extends AppCompatActivity implements InteractFragment.ActivityInteractionCallback {
-
-    private static final String START = HomeFragment.START;
 
     private DrawerLayout drawer;
     private TextView title;

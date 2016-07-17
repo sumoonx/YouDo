@@ -8,6 +8,7 @@ import java.util.Stack;
 
 import cn.edu.seu.udo.ui.fragment.HomeFragment;
 import cn.edu.seu.udo.ui.fragment.RiseCoolFragment;
+import cn.edu.seu.udo.ui.fragment.RiseDetailFragment;
 import cn.edu.seu.udo.ui.fragment.RiseFragment;
 import cn.edu.seu.udo.ui.fragment.ScreenFragment;
 import cn.edu.seu.udo.ui.fragment.StudyDetailFragment;
@@ -85,6 +86,9 @@ public class ScreenManager {
                 break;
             case RiseCoolFragment.START:
                 ret = new RiseCoolFragment();
+                break;
+            case RiseDetailFragment.START:
+                ret = new RiseDetailFragment();
                 break;
         }
         return ret;

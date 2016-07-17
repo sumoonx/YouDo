@@ -22,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.edu.seu.udo.R;
 import cn.edu.seu.udo.entities.Greeting;
+import cn.edu.seu.udo.mvp.presenter.RiseDetailPresenter;
 import cn.edu.seu.udo.mvp.presenter.RisePresenter;
 import cn.edu.seu.udo.mvp.view.RiseIView;
 import cn.edu.seu.udo.ui.view.RentalsSunHeaderView;
@@ -300,6 +301,7 @@ public class RiseFragment extends ScreenFragment implements RiseIView, OnClickLi
                     riseBtn.setProgress(-1);
                 }
                 sleepBtn.setClickable(true);
+                activityInteraction.doInteract(RiseDetailFragment.START);
             }
         }, 500);
     }
@@ -367,7 +369,7 @@ public class RiseFragment extends ScreenFragment implements RiseIView, OnClickLi
 
     @Override
     public String getTitle() {
-        return "早起";
+        return "早起墙";
     }
 
     @Override

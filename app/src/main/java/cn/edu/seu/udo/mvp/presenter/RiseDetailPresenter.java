@@ -1,5 +1,9 @@
 package cn.edu.seu.udo.mvp.presenter;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import cn.edu.seu.udo.mvp.view.RiseDetailIView;
 
 /**
@@ -8,4 +12,19 @@ import cn.edu.seu.udo.mvp.view.RiseDetailIView;
  */
 public class RiseDetailPresenter extends Presenter<RiseDetailIView> {
 
+    public void getDates() {
+        List<Date> dates = new ArrayList<>();
+        Date date = new Date();
+        dates.add(date);
+        iView.renderRiseTime(date);
+        date = new Date(date.getTime() - 500000000);
+        dates.add(date);
+        date = new Date(date.getTime() - 500000000);
+        dates.add(date);
+        date = new Date(date.getTime() - 500000000);
+        dates.add(date);
+        date = new Date(date.getTime() - 500000000);
+        dates.add(date);
+        iView.renderRiseDates(dates);
+    }
 }

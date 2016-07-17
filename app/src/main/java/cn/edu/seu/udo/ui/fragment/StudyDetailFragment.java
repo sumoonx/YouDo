@@ -33,7 +33,7 @@ import cn.edu.seu.udo.entities.StudyTime;
 import cn.edu.seu.udo.mvp.presenter.StudyDetailPresenter;
 import cn.edu.seu.udo.mvp.view.StudyDetailIView;
 import cn.edu.seu.udo.ui.model.HourFormatter;
-import cn.edu.seu.udo.ui.view.StudyDetailMarkerView;
+import cn.edu.seu.udo.ui.view.HourMarkerView;
 
 /**
  * Author: Jeremy Xu on 2016/6/6 13:17
@@ -288,8 +288,8 @@ public class StudyDetailFragment extends ScreenFragment implements StudyDetailIV
     }
 
     @NonNull
-    private StudyDetailMarkerView getLineMakerView() {
-        return new StudyDetailMarkerView(getActivity(), R.layout.study_detail_marker_view);
+    private HourMarkerView getLineMakerView() {
+        return new HourMarkerView(getActivity(), R.color.study_detail_markview_color);
     }
 
     private void setupLineInteraction() {

@@ -10,21 +10,23 @@ import com.github.mikephil.charting.highlight.Highlight;
 import java.text.DecimalFormat;
 
 import cn.edu.seu.udo.R;
+import cn.edu.seu.udo.utils.DateUtil;
 
 /**
  * Author: Jeremy Xu on 2016/4/12 20:10
  * E-mail: jeremy_xm@163.com
  */
-public class StudyDetailMarkerView extends MarkerView {
+public class HourMarkerView extends MarkerView {
 
     private TextView tvContent;
 
     private DecimalFormat decimalFormat;
 
-    public StudyDetailMarkerView(Context context, int layoutResource) {
-        super(context, layoutResource);
+    public HourMarkerView(Context context, int colorResource) {
+        super(context, R.layout.study_detail_marker_view);
         // this markerview only displays a textview
         tvContent = (TextView) findViewById(R.id.tvContent);
+        tvContent.setTextColor(colorResource);
 
         decimalFormat = new DecimalFormat("##.#");
     }
@@ -33,7 +35,7 @@ public class StudyDetailMarkerView extends MarkerView {
     // content (user-interface)
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-        tvContent.setText(decimalFormat.format(e.getVal()) + "h"); // set the entry-value as the display text
+        tvContent.setText(DateUtil.timeStrFrom(e.getVal()));
     }
 
     @Override
