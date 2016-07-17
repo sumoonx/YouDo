@@ -14,38 +14,26 @@ import cn.edu.seu.udo.mvp.view.RiseIView;
  * Author: Jeremy Xu on 2016/6/22 14:50
  * E-mail: jeremy_xm@163.com
  */
-public class RisePresenter implements Presenter<RiseIView> {
-
-    private RiseIView view;
+public class RisePresenter extends Presenter<RiseIView> {
 
     @Inject
     public RisePresenter() {}
 
-    @Override
-    public void takeView(RiseIView riseIView) {
-        view = riseIView;
-    }
-
-    @Override
-    public void dropView() {
-        view = null;
-    }
-
     public void getAfter(Greeting greeting) {
-        view.notifyAfterLoaded(fakeGreetings());
+        iView.notifyAfterLoaded(fakeGreetings());
     }
 
     public void getBefore(Greeting greeting) {
-        view.notifyBeforeLoaded(fakeGreetings());
+        iView.notifyBeforeLoaded(fakeGreetings());
     }
 
     private int i = 0;
     public void getRandomGreeting() {
-        view.notifyRandomGreeting("帅的人已经醒来+" + (i++) + "!");
+        iView.notifyRandomGreeting("帅的人已经醒来+" + (i++) + "!");
     }
 
     public void sendGreeting(String greeting) {
-        view.notifyGreetingSend();
+        iView.notifyGreetingSend();
     }
 
     private List<Greeting> fakeGreetings() {

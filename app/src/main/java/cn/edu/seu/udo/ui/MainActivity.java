@@ -50,19 +50,6 @@ public class MainActivity extends AppCompatActivity implements InteractFragment.
         setupToolBar();
         setupScreen();
 
-//        new Thread(new Runnable(){
-//            @Override
-//            public void run() {
-//                while (true) {
-//                    try {
-//                        Thread.sleep(1500);
-//                    } catch (Exception e) {
-//
-//                    }
-//                    myHandler.sendEmptyMessage(0);
-//                }
-//            }
-//        }).start();
     }
 
     @Override

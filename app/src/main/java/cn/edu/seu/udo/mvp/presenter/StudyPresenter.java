@@ -27,9 +27,7 @@ import cn.edu.seu.udo.utils.ToastUtil;
  * Author: Jeremy Xu on 2016/4/17 18:25
  * E-mail: jeremy_xm@163.com
  */
-public class StudyPresenter implements Presenter<StudyIView> {
-
-    private StudyIView studyView;
+public class StudyPresenter extends Presenter<StudyIView> {
 
     private CountTimeIntentService countService = null;
     // 同service交互
@@ -38,7 +36,7 @@ public class StudyPresenter implements Presenter<StudyIView> {
         public boolean handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
-                    if(studyView == null)
+                    if(iView == null)
                         return false;
                     int state = countService.getState();
                     switch (state) {
@@ -47,13 +45,13 @@ public class StudyPresenter implements Presenter<StudyIView> {
                         case CountTimeIntentService.STATE_UPLOADING:
                             break;
                         case CountTimeIntentService.STATE_COUNTING:
-                            studyView.setTime(getTimeStr());
+                            iView.setTime(getTimeStr());
                             break;
                         case CountTimeIntentService.STATE_IDLE:
-                            studyView.setIdle();
+                            iView.setIdle();
                             break;
                         case CountTimeIntentService.STATE_RESULT:
-                            studyView.setResult(countService.getResult(),getTimeStr());
+                            iView.setResult(countService.getResult(),getTimeStr());
                             break;
                         default:
                     }
@@ -73,31 +71,20 @@ public class StudyPresenter implements Presenter<StudyIView> {
 
     @Inject
     public StudyPresenter() {
-
-    }
-
-    @Override
-    public void takeView(StudyIView studyView) {
-        this.studyView = studyView;
         syncWithCountTimeService();
     }
 
-    @Override
-    public void dropView() {
-        studyView = null;
-    }
-
     public void showDetail() {
-        studyView.showDetail();
+        iView.showDetail();
     }
 
     public void clickBtn(){
         if (countService.isRunning()) {
             countService.stop();
-            studyView.setComputing(getTimeStr());
+            iView.setComputing(getTimeStr());
         } else if(countService.getState() == CountTimeIntentService.STATE_RESULT) {
             countService.setState(CountTimeIntentService.STATE_IDLE);
-            studyView.setIdle();
+            iView.setIdle();
         }else{
             if (Build.VERSION.SDK_INT >= 21) {
                 if (AppInfoUtil.isNoOption() && !AppInfoUtil.isNoSwitch()) {
@@ -111,11 +98,11 @@ public class StudyPresenter implements Presenter<StudyIView> {
             Intent service = new Intent(MainActivity.INSTANCE , CountTimeIntentService.class);
             MainActivity.INSTANCE.startService(service);
 
-            studyView.setCounting(getTimeStr());
+            iView.setCounting(getTimeStr());
         }
     }
 
-    private void syncWithCountTimeService(){
+    public void syncWithCountTimeService(){
         Intent service = new Intent(MainActivity.INSTANCE, CountTimeIntentService.class);
 
         MainActivity.INSTANCE.bindService(service, new ServiceConnection() {
@@ -132,13 +119,13 @@ public class StudyPresenter implements Presenter<StudyIView> {
                 int state = countService.getState();
                 switch (state) {
                     case CountTimeIntentService.STATE_COMPUTING:
-                        studyView.setComputing(getTimeStr());
+                        iView.setComputing(getTimeStr());
                         break;
                     case CountTimeIntentService.STATE_COUNTING:
-                        studyView.setCounting(getTimeStr());
+                        iView.setCounting(getTimeStr());
                         break;
                     case CountTimeIntentService.STATE_IDLE:
-                        studyView.setIdle();
+                        iView.setIdle();
                         SharedPreferences mySharedPreferences =
                                 UdoApplication.getUdoApplication()
                                         .getSharedPreferences("service", Activity.MODE_PRIVATE);

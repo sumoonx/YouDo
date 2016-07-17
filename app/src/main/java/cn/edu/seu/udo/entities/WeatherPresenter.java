@@ -14,8 +14,7 @@ import rx.schedulers.Schedulers;
  *time 2016/6/6 13:46
  *email 1013773046@qq.com
  */
-public class WeatherPresenter implements Presenter<WeatherIView> {
-    WeatherIView weatherIView;
+public class WeatherPresenter extends Presenter<WeatherIView> {
     WeatherModel weatherModel;
 
     public WeatherPresenter() {
@@ -32,19 +31,8 @@ public class WeatherPresenter implements Presenter<WeatherIView> {
                     public void onError(Throwable e) {}
                     @Override
                     public void onNext(WeatherBean weather) {
-                        weatherIView.show(weather);
-
+                        iView.show(weather);
                     }
                 });
-    }
-
-    @Override
-    public void takeView(WeatherIView weatherIView) {
-        this.weatherIView = weatherIView;
-    }
-
-    @Override
-    public void dropView() {
-        weatherIView = null;
     }
 }

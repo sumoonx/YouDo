@@ -11,10 +11,16 @@ import cn.edu.seu.udo.mvp.view.IView;
  * Author: Jeremy Xu on 2016/4/5 20:54
  * E-mail: jeremy_xm@163.com
  */
-public interface Presenter<V extends IView> {
+public abstract class Presenter<V extends IView> {
 
-    void takeView(V v);
+    protected V iView;
 
-    void dropView();
+    public void takeView(V v) {
+        iView = v;
+    }
+
+    public void dropView() {
+        iView = null;
+    }
 
 }

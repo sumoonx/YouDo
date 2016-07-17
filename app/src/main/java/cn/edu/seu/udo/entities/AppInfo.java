@@ -1,8 +1,8 @@
 package cn.edu.seu.udo.entities;
 
-import cn.edu.seu.udo.R;
 import android.graphics.drawable.Drawable;
 
+import cn.edu.seu.udo.R;
 import cn.edu.seu.udo.UdoApplication;
 
 public class AppInfo {
@@ -11,7 +11,7 @@ public class AppInfo {
     private Drawable icon;
 
     public AppInfo() {
-        label = "À¯∆¡";
+        label = "ÈîÅÂ±è";
         packageName = "lock";
         icon = UdoApplication.getUdoApplication().getResources().getDrawable(R.drawable.lock);
     }

@@ -3,6 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/app/src/main/java/cn/edu/seu/udo/cache/UserDBHelper.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/cn/edu/seu/udo/entities/UserRecord.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/cn/edu/seu/udo/entities/WeatherUrlBean.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/cn/edu/seu/udo/service/CountTimeIntentService.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/cn/edu/seu/udo/service/MyNotification.java" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />

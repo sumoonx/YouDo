@@ -57,7 +57,7 @@ public class UdoApplication extends Application {
                             pinfo.applicationInfo).toString());
                     shareItem.setPackageName(pinfo.applicationInfo.packageName);
 
-                    if (shareItem.getPackageName().equals("com.seu.zxj")
+                    if (shareItem.getPackageName().equals("cn.edu.seu.udo")
                             || shareItem.getPackageName().equals(
                             AppInfoUtil.getLauncherPackageName()))
                         continue;

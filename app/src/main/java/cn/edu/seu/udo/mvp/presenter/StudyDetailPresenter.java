@@ -14,9 +14,9 @@ import cn.edu.seu.udo.utils.UserUtil;
  * Author: Jeremy Xu on 2016/4/10 13:53
  * E-mail: jeremy_xm@163.com
  */
-public class StudyDetailPresenter implements Presenter<StudyDetailIView> {
 
-    private StudyDetailIView studyDetailView;
+public class StudyDetailPresenter extends Presenter<StudyDetailIView> {
+
     private ArrayList<UserRecord> userRecords;
     private List<StudyTime> studyTimes;
 
@@ -25,30 +25,27 @@ public class StudyDetailPresenter implements Presenter<StudyDetailIView> {
 
     @Override
     public void takeView(StudyDetailIView studyDetailView) {
-        this.studyDetailView = studyDetailView;
+
+        super.takeView(studyDetailView);
+
         userRecords = getUseRecords(5);
         studyTimes = generateStudyTimes();
     }
 
-    @Override
-    public void dropView() {
-        studyDetailView = null;
-    }
-
     public void getRank(String day) {
         StudyTime model = getStudyTime(day);
-        studyDetailView.renderRank(model.getRank());
+        iView.renderRank(model.getRank());
     }
 
     public void getStudyTimes() {
-        studyDetailView.renderStudyTimes(studyTimes);
-        studyDetailView.renderRank(studyTimes.get(studyTimes.size() - 1).getRank());
-        studyDetailView.renderAppUsages(studyTimes.get(studyTimes.size() - 1).getAppUsageBrief());
+        iView.renderStudyTimes(studyTimes);
+        iView.renderRank(studyTimes.get(studyTimes.size() - 1).getRank());
+        iView.renderAppUsages(studyTimes.get(studyTimes.size() - 1).getAppUsageBrief());
     }
 
     public void getAppUsage(String day) {
         List<AppUsage> usageModels = getStudyTime(day).getAppUsageBrief();
-        studyDetailView.renderAppUsages(usageModels);
+        iView.renderAppUsages(usageModels);
     }
 
     private StudyTime getStudyTime(String day) {

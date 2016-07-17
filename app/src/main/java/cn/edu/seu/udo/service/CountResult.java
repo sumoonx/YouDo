@@ -22,11 +22,9 @@ public class CountResult implements Serializable {
 	private static Map<String, Double> qMap;
 	static {
 		qMap = new HashMap<String, Double>();
-		qMap.put("ËøÆÁ", 0.0);
+		qMap.put("é”å±", 0.0);
 		qMap.put("Udo", 0.0);
 		qMap.put(AppInfoUtil.getLauncherLabel(), 0.0);
-		// qMap.put("å¾®ä¿¡", 1.0);
-		// qMap.put("QQ", 1.0);
 	}
 
 	private ArrayList<TimeAxisItem> timeAxis;
