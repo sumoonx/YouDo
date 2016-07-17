@@ -1,9 +1,9 @@
-package cn.edu.seu.udo.mvp.Model;
+package cn.edu.seu.udo.mvp.model;
 
 
 import cn.edu.seu.udo.entities.WeatherBean;
 import cn.edu.seu.udo.entities.WeatherUrlBean;
-import cn.edu.seu.udo.repository.ApiManager;
+import cn.edu.seu.udo.rest.ApiManager;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
