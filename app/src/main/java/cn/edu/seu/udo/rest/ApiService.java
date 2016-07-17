@@ -1,4 +1,4 @@
-package cn.edu.seu.udo.repository;
+package cn.edu.seu.udo.rest;
 
 
 import cn.edu.seu.udo.entities.WeatherUrlBean;

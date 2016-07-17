@@ -1,4 +1,4 @@
-package cn.edu.seu.udo.repository;
+package cn.edu.seu.udo.rest;
 
 /*
  *desc 存放公共URL
