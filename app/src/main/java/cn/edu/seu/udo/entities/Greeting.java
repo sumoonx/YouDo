@@ -1,7 +1,5 @@
-package cn.edu.seu.udo.model.entities;
+package cn.edu.seu.udo.entities;
 
-import android.graphics.Color;
-import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 
 import cn.edu.seu.udo.R;

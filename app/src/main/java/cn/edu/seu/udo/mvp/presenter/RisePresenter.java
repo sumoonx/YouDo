@@ -6,8 +6,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import cn.edu.seu.udo.R;
-import cn.edu.seu.udo.model.entities.Greeting;
-import cn.edu.seu.udo.model.entities.Time;
+import cn.edu.seu.udo.entities.Greeting;
+import cn.edu.seu.udo.entities.Time;
 import cn.edu.seu.udo.mvp.view.RiseIView;
 
 /**

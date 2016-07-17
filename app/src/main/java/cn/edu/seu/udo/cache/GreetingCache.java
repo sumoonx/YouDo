@@ -1,4 +1,4 @@
-package cn.edu.seu.udo.model.cache;
+package cn.edu.seu.udo.cache;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -10,8 +10,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import cn.edu.seu.udo.R;
-import cn.edu.seu.udo.model.entities.Greeting;
-import cn.edu.seu.udo.model.entities.Time;
+import cn.edu.seu.udo.entities.Greeting;
+import cn.edu.seu.udo.entities.Time;
 
 /**
  * Author: Jeremy Xu on 2016/7/2 21:41

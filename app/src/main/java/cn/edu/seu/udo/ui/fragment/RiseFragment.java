@@ -21,7 +21,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.edu.seu.udo.R;
-import cn.edu.seu.udo.model.entities.Greeting;
+import cn.edu.seu.udo.entities.Greeting;
 import cn.edu.seu.udo.mvp.presenter.RisePresenter;
 import cn.edu.seu.udo.mvp.view.RiseIView;
 import cn.edu.seu.udo.ui.view.RentalsSunHeaderView;

@@ -1,4 +1,4 @@
-package cn.edu.seu.udo.model.repository;
+package cn.edu.seu.udo.repository;
 
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;

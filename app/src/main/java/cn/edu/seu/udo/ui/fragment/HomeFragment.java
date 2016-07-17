@@ -25,8 +25,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.edu.seu.udo.R;
-import cn.edu.seu.udo.model.entities.WeatherBean;
-import cn.edu.seu.udo.model.entities.Tool;
+import cn.edu.seu.udo.entities.WeatherBean;
+import cn.edu.seu.udo.entities.Tool;
 import cn.edu.seu.udo.mvp.presenter.WeatherPresenter;
 import cn.edu.seu.udo.mvp.view.WeatherIView;
 import cn.edu.seu.udo.ui.model.BannerPreviewHolder;
