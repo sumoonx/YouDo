@@ -8,7 +8,7 @@ public class UserUtil {
     private UserUtil(){}
 
     public static boolean hasAccount(){
-        return false;
+        return true;
     }
 
     public static int getUserId(){

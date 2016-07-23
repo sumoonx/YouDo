@@ -19,7 +19,6 @@ import javax.inject.Inject;
 import cn.edu.seu.udo.UdoApplication;
 import cn.edu.seu.udo.mvp.view.StudyIView;
 import cn.edu.seu.udo.service.CountTimeIntentService;
-import cn.edu.seu.udo.ui.MainActivity;
 import cn.edu.seu.udo.utils.AppInfoUtil;
 import cn.edu.seu.udo.utils.ToastUtil;
 
@@ -89,23 +88,24 @@ public class StudyPresenter extends Presenter<StudyIView> {
             if (Build.VERSION.SDK_INT >= 21) {
                 if (AppInfoUtil.isNoOption() && !AppInfoUtil.isNoSwitch()) {
                     Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     UdoApplication.getUdoApplication().startActivity(intent);
                     countService.setHasAlert(true);
                     ToastUtil.show(UdoApplication.getUdoApplication(), "请开启好大学应用权限");
                 }
             }
 
-            Intent service = new Intent(MainActivity.INSTANCE , CountTimeIntentService.class);
-            MainActivity.INSTANCE.startService(service);
+            Intent service = new Intent(UdoApplication.getUdoApplication(), CountTimeIntentService.class);
+            UdoApplication.getUdoApplication().startService(service);
 
             iView.setCounting(getTimeStr());
         }
     }
 
     public void syncWithCountTimeService(){
-        Intent service = new Intent(MainActivity.INSTANCE, CountTimeIntentService.class);
+        Intent service = new Intent(UdoApplication.getUdoApplication(), CountTimeIntentService.class);
 
-        MainActivity.INSTANCE.bindService(service, new ServiceConnection() {
+        UdoApplication.getUdoApplication().bindService(service, new ServiceConnection() {
 
             @Override
             public void onServiceDisconnected(ComponentName arg0) {
