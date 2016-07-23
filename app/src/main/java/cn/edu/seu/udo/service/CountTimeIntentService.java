@@ -18,7 +18,14 @@ import java.util.Set;
 
 import cn.edu.seu.udo.UdoApplication;
 import cn.edu.seu.udo.cache.UserDBHelper;
+import cn.edu.seu.udo.entities.UploadResult;
+import cn.edu.seu.udo.rest.ApiManager;
 import cn.edu.seu.udo.utils.AppInfoUtil;
+import cn.edu.seu.udo.utils.LogUtil;
+import cn.edu.seu.udo.utils.UserUtil;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class CountTimeIntentService extends IntentService {
 
@@ -102,7 +109,7 @@ public class CountTimeIntentService extends IntentService {
     public class ZXJAccServiceReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            appName = intent.getStringExtra(ZXJAccessibilityService.PACKAGE_NAME);
+//            appName = intent.getStringExtra(ZXJAccessibilityService.PACKAGE_NAME);
             // eventTime = intent.getLongExtra("event_time", -1);
             // Log.d(TAG, appName + " at time: " + eventTime);
         }
@@ -136,7 +143,7 @@ public class CountTimeIntentService extends IntentService {
         second = 0;
         millis = 0;
         super.onStart(intent, startId);
-        this.startForeground(1, MyNotification.getNotification());
+        this.startForeground(1, MyNotification.getINSTANCE().getNotification());
     }
 
     @Override
@@ -168,11 +175,19 @@ public class CountTimeIntentService extends IntentService {
 
             millis = (int) (currentTime % 1000);
             currentTime /= 1000;
-            second = (int) (currentTime % 60);
+            int second_tmp = (int) (currentTime % 60);
+            if(second_tmp != second){
+                second = second_tmp;
+                CharSequence contentTitle = "正在自习中...";
+                CharSequence contentText =
+                        "已经自习" + hour + "时" + minute + "分" + second + "秒   " + "当前应用:"
+                                + AppInfoUtil.getAppLableByPkgName(currentApp);
+                MyNotification.setLatestEventInfo(contentTitle,contentText);
+                handler.sendEmptyMessage(0);
+            }
             currentTime /= 60;
             minute = (int) (currentTime % 60);
             hour = (int) (currentTime /= 60);
-            handler.sendEmptyMessage(0);
 
             String newApp = "";
             KeyguardManager mKeyguardManager =
@@ -211,17 +226,6 @@ public class CountTimeIntentService extends IntentService {
                 }
             }
             currentApp = newApp;
-
-            CharSequence contentTitle = "正在自习中...";;
-            CharSequence contentText =
-                    "已经自习" + hour + "时" + minute + "分" + second + "秒   " + "当前应用:"
-                            + AppInfoUtil.getAppLableByPkgName(currentApp);
-
-            MyNotification.setsetLatestEventInfo(contentTitle,contentText);
-            this.startForeground(1, MyNotification.getNotification());
-
-            //handler.sendEmptyMessage(0);
-
             end = System.currentTimeMillis();
             try {
                 if (end - start < precision) Thread.sleep(precision - end + start);
@@ -310,64 +314,42 @@ public class CountTimeIntentService extends IntentService {
         return calling;
     }
 
+    private class ResultObserver implements Observer<UploadResult>{
+
+        private CountResult countResult;
+
+        ResultObserver(CountResult countResult){
+            this.countResult = countResult;
+        }
+        @Override
+        public void onCompleted() {
+            LogUtil.i("completed");
+        }
+        @Override
+        public void onError(Throwable e) {
+            LogUtil.i(""+e.getMessage());
+            UserDBHelper.INSTANCE.add(UserUtil.getUserId(), result.getRecordTime(), result, result.getRank(),
+                    result.getScore(), 0);
+        }
+        @Override
+        public void onNext(UploadResult result) {
+            LogUtil.i(result.getRank()+","+result.getState());
+            UserDBHelper.INSTANCE.add( UserUtil.getUserId(), countResult.getRecordTime(), countResult,(float) result.getRank(),
+                    countResult.getScore(), 1);
+        }
+    }
+
     public void uploadAndStore(CountResult result) {
 
-//        if (UserUtil.hasAccount()) {
-//            int upload = 0;
-//            String id = UserUtil.getAccount().getUsrId();
-//            LogUtil.i("upload", id);
-//            int _id = Integer.valueOf(id).intValue();
-//            try {
-//                String url = "http://api.learningjun.site/upload";
-//                // 创建连接
-//                HttpClient httpClient = new DefaultHttpClient();
-//                httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 5000);
-//                httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 5000);
-//                HttpPost post = new HttpPost(url);
-//                // 设置参数，仿html表单提交
-//                ArrayList<NameValuePair> paramList = new ArrayList<NameValuePair>();
-//                BasicNameValuePair pid = new BasicNameValuePair("user_id", id);
-//
-//                BasicNameValuePair pscore = new BasicNameValuePair("score", result.getScore() + "");
-//                BasicNameValuePair pduration =
-//                        new BasicNameValuePair("duration", result.getTotalTime() / 1000f + "");
-//                BasicNameValuePair pdetail = new BasicNameValuePair("detail", result.getDetail());
-//                BasicNameValuePair ptimestamp =
-//                        new BasicNameValuePair("timestamp", result.getRecordTime() / 1000 + "");
-//                paramList.add(pid);
-//                paramList.add(pscore);
-//                paramList.add(pduration);
-//                paramList.add(pdetail);
-//                paramList.add(ptimestamp);
-//
-//                post.setEntity(new UrlEncodedFormEntity(paramList, HTTP.UTF_8));
-//
-//                // 发�?�HttpPost请求，并返回HttpResponse对象
-//                HttpResponse httpResponse = httpClient.execute(post);
-//                // Thread.sleep(500);
-//                // LogUtil.i("upload", EntityUtils.toString(httpResponse
-//                // .getEntity()));
-//                // 判断请求响应状�?�码，状态码�?200表示服务端成功响应了客户端的请求
-//                if (httpResponse.getStatusLine().getStatusCode() == 200) {
-//                    // 获取返回结果
-//                    String response = EntityUtils.toString(httpResponse.getEntity());
-//                    JSONObject json = new JSONObject(response);
-//                    LogUtil.i("upload", "json:" + (float) json.getDouble("rank"));
-//                    result.setRank((float) json.getDouble("rank"));
-//                    upload = 1;
-//                }
-//            } catch (Exception e) {
-//                upload = 0;
-//                Toast.makeText(MyApp.getContext(), "网络错误，上传失�?", Toast.LENGTH_SHORT).show();
-//                // LogUtil.e("upload", e.getMessage());
-//            }
-//            // 添加到本地数据库
-//            UserDBHelper.INSTANCE.add(_id, result.getRecordTime(), result, result.getRank(),
-//                    result.getScore(), upload);
-//        } else {
-//            // 添加到本地数据库
+        if (UserUtil.hasAccount()) {
+        ApiManager.getApiManager().getApiService().uploadRecord("0",result.getScore()+"",result.getTotalTime() / 1000f + "",result.getDetail(),result.getRecordTime()/ 1000+"")
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new ResultObserver(result));
+        } else {
+            // 添加到本地数据库
             UserDBHelper.INSTANCE.add(0, result.getRecordTime(), result, result.getRank(),
                     result.getScore(), 0);
-//        }
+        }
     }
 }

@@ -39,6 +39,7 @@ public class StudyFragment extends ScreenFragment implements StudyIView{
         super.onStart();
         //initInjector();
         presenter.takeView(this);
+
         btn_learn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

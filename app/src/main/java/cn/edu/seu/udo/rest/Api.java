@@ -7,5 +7,6 @@ package cn.edu.seu.udo.rest;
  *email 1013773046@qq.com
  */
 public class Api {
-    public static final String BASE_URL = "http://wthrcdn.etouch.cn";
+    public static final String BASE_URL = "http://api.learningjun.site";
+
 }
