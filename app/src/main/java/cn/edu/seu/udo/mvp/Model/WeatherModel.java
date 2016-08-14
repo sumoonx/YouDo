@@ -1,4 +1,4 @@
-package cn.edu.seu.udo.mvp.model;
+package cn.edu.seu.udo.mvp.Model;
 
 
 import cn.edu.seu.udo.entities.WeatherBean;
