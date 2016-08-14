@@ -25,20 +25,25 @@ public class MyNotification{
                 .setWhen(System.currentTimeMillis())
                 .setPriority(Notification.PRIORITY_DEFAULT)
                 .setOngoing(true)
-                .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setSmallIcon(R.drawable.ic_launcher);
 
     }
 
-    public static Notification getNotification() {
+    public static MyNotification getINSTANCE(){
+        return INSTANCE;
+    }
+
+    public Notification getNotification() {
         Notification  notification =  builder.build();
         notification.flags |= Notification.FLAG_NO_CLEAR;
         return notification;
     }
 
-    public static void setsetLatestEventInfo(CharSequence contentTitle, CharSequence contentText) {
+    public static void setLatestEventInfo(CharSequence contentTitle, CharSequence contentText) {
         builder.setContentTitle(contentTitle)
                 .setContentText(contentText)
                 .setWhen(System.currentTimeMillis());
+
+        mNotificationManager.notify(1,builder.build());
     }
 }

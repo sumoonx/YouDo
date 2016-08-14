@@ -47,7 +47,7 @@ public class AppInfoUtil {
     }
 
     /**
-     * »ñÈ¡Ç°Ì¨Ó¦ÓÃ°üÃû
+     * ï¿½ï¿½È¡Ç°Ì¨Ó¦ï¿½Ã°ï¿½ï¿½ï¿½
      *
      * @return String
      */
@@ -80,7 +80,7 @@ public class AppInfoUtil {
     }
 
     /**
-     * Í¨¹ı°üÃû»ñÈ¡Ó¦ÓÃĞÅÏ¢
+     * Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡Ó¦ï¿½ï¿½ï¿½ï¿½Ï¢
      *
      * @return AppInfo
      */
@@ -93,12 +93,12 @@ public class AppInfoUtil {
             return appInfo;
         else if (packageName.equals("call")) {
             appInfo.setPackageName(packageName);
-            appInfo.setLabel("Í¨»°");
+            appInfo.setLabel("é€šè¯");
             appInfo.setIcon(UdoApplication.getUdoApplication().getResources().getDrawable(R.drawable.lock));
             return appInfo;
-        } else if (packageName.equals("ÆäËû")) {
+        } else if (packageName.equals("å…¶ä»–")) {
             appInfo.setPackageName(packageName);
-            appInfo.setLabel("ÆäËû");
+            appInfo.setLabel("å…¶ä»–");
             appInfo.setIcon(UdoApplication.getUdoApplication().getResources().getDrawable(R.drawable.lock));
             return appInfo;
         }
@@ -114,15 +114,15 @@ public class AppInfoUtil {
     }
 
     /**
-     * Í¨¹ı°üÃû»ñÈ¡Ó¦ÓÃÃû
+     * Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡Ó¦ï¿½ï¿½ï¿½ï¿½
      *
      * @return String
      */
     public static String getAppLableByPkgName(String packageName) {
         if (packageName.equals("lock"))
-            return "ËøÆÁ";
-        else if (packageName.equals("call")) return "Í¨»°";
-        if (packageName.equals("ÆäËû")) return "ÆäËû";
+            return "é”å±";
+        else if (packageName.equals("call")) return "é€šè¯";
+        if (packageName.equals("å…¶ä»–")) return "å…¶ä»–";
         Context context =  UdoApplication.getUdoApplication();
         PackageManager pm = context.getPackageManager();
         ApplicationInfo info = null;
@@ -137,7 +137,7 @@ public class AppInfoUtil {
     }
 
     /*
-     * »ñÈ¡×ÀÃæ°üÃû
+     * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     public static String getLauncherPackageName() {
         final Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -148,7 +148,7 @@ public class AppInfoUtil {
             return null;
         }
         if (res.activityInfo.packageName.equals("android")) {
-            // ÓĞ¶à¸ö×ÀÃæ³ÌĞò´æÔÚ£¬ÇÒÎ´Ö¸¶¨Ä¬ÈÏÏîÊ±£»
+            // ï¿½Ğ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½Î´Ö¸ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
             return null;
         } else {
             return res.activityInfo.packageName;
@@ -156,13 +156,13 @@ public class AppInfoUtil {
     }
 
     /*
-     * »ñÈ¡×ÀÃæÓ¦ÓÃÃû
+     * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
      */
     public static String getLauncherLabel() {
         return getAppLableByPkgName(getLauncherPackageName());
     }
     /*
-     * »ñÈ¡Í¨»°³ÌĞò°üÃû
+     * ï¿½ï¿½È¡Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     public static String getPhonePackageName() {
         Intent intent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + 0));
@@ -180,7 +180,7 @@ public class AppInfoUtil {
 
 
     /**
-     * ²éÑ¯ÊÖ»úÄÚÓ¦ÓÃ
+     * ï¿½ï¿½Ñ¯ï¿½Ö»ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½
      *
      * @param context
      * @return List<PackgeInfo>
@@ -188,11 +188,11 @@ public class AppInfoUtil {
 	public static List<PackageInfo> getAllApps(Context context) {
 		List<PackageInfo> apps = new ArrayList<PackageInfo>();
 		PackageManager pManager = context.getPackageManager();
-        // »ñÈ¡ÊÖ»úÄÚËùÓĞÓ¦ÓÃ
+        // ï¿½ï¿½È¡ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½
 		List<PackageInfo> paklist = pManager.getInstalledPackages(0);
 		for (int i = 0; i < paklist.size(); i++) {
 			PackageInfo pak = (PackageInfo) paklist.get(i);
-            // ÅĞ¶ÏÊÇ·ñÎª·ÇÏµÍ³Ô¤×°µÄÓ¦ÓÃ³ÌĞò
+            // ï¿½Ğ¶ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½ÏµÍ³Ô¤×°ï¿½ï¿½Ó¦ï¿½Ã³ï¿½ï¿½ï¿½
 			if ((pak.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) <= 0) {
 				// customs applications
 				apps.add(pak);
@@ -201,7 +201,7 @@ public class AppInfoUtil {
 
 		for (int i = 0; i < paklist.size(); i++) {
 			PackageInfo pak = (PackageInfo) paklist.get(i);
-            // ÅĞ¶ÏÊÇ·ñÎª·ÇÏµÍ³Ô¤×°µÄÓ¦ÓÃ³ÌĞò
+            // ï¿½Ğ¶ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½ÏµÍ³Ô¤×°ï¿½ï¿½Ó¦ï¿½Ã³ï¿½ï¿½ï¿½
 			if ((pak.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) > 0) {
 				// customs applications
 				apps.add(pak);
