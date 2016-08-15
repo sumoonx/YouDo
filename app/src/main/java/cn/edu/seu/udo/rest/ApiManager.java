@@ -43,7 +43,7 @@ public class ApiManager {
                 .baseUrl(Api.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create()) // 使用RxJava作为回调适配器
-                .build();
+        .build();
 
         this.apiService = sRetrofit.create(ApiService.class);
     }

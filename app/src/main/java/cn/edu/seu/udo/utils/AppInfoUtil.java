@@ -47,7 +47,7 @@ public class AppInfoUtil {
     }
 
     /**
-     * ��ȡǰ̨Ӧ�ð���
+     * 返回当前应用包名，暂不支持5.0
      *
      * @return String
      */
@@ -80,7 +80,7 @@ public class AppInfoUtil {
     }
 
     /**
-     * ͨ��������ȡӦ����Ϣ
+     * ????????????????
      *
      * @return AppInfo
      */
@@ -114,7 +114,7 @@ public class AppInfoUtil {
     }
 
     /**
-     * ͨ��������ȡӦ����
+     * ???????????????
      *
      * @return String
      */
@@ -137,7 +137,7 @@ public class AppInfoUtil {
     }
 
     /*
-     * ��ȡ�������
+     * ??????????
      */
     public static String getLauncherPackageName() {
         final Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -148,7 +148,7 @@ public class AppInfoUtil {
             return null;
         }
         if (res.activityInfo.packageName.equals("android")) {
-            // �ж�����������ڣ���δָ��Ĭ����ʱ��
+            // ?ж???????????????δ???????????
             return null;
         } else {
             return res.activityInfo.packageName;
@@ -156,13 +156,13 @@ public class AppInfoUtil {
     }
 
     /*
-     * ��ȡ����Ӧ����
+     * ????????????
      */
     public static String getLauncherLabel() {
         return getAppLableByPkgName(getLauncherPackageName());
     }
     /*
-     * ��ȡͨ���������
+     * ?????????????
      */
     public static String getPhonePackageName() {
         Intent intent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + 0));
@@ -180,7 +180,7 @@ public class AppInfoUtil {
 
 
     /**
-     * ��ѯ�ֻ���Ӧ��
+     * ???????????
      *
      * @param context
      * @return List<PackgeInfo>
@@ -188,11 +188,11 @@ public class AppInfoUtil {
 	public static List<PackageInfo> getAllApps(Context context) {
 		List<PackageInfo> apps = new ArrayList<PackageInfo>();
 		PackageManager pManager = context.getPackageManager();
-        // ��ȡ�ֻ�������Ӧ��
+        // ???????????????
 		List<PackageInfo> paklist = pManager.getInstalledPackages(0);
 		for (int i = 0; i < paklist.size(); i++) {
 			PackageInfo pak = (PackageInfo) paklist.get(i);
-            // �ж��Ƿ�Ϊ��ϵͳԤװ��Ӧ�ó���
+            // ?ж???????????????ó???
 			if ((pak.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) <= 0) {
 				// customs applications
 				apps.add(pak);
@@ -201,7 +201,7 @@ public class AppInfoUtil {
 
 		for (int i = 0; i < paklist.size(); i++) {
 			PackageInfo pak = (PackageInfo) paklist.get(i);
-            // �ж��Ƿ�Ϊ��ϵͳԤװ��Ӧ�ó���
+            // ?ж???????????????ó???
 			if ((pak.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) > 0) {
 				// customs applications
 				apps.add(pak);
